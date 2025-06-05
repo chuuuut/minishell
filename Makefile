@@ -9,6 +9,7 @@ INCLUDE_DIR = includes
 # Sources
 SRC := \
 	main.c \
+	parse.c \
 
 #Path to sources
 VPATH = $(SRC_DIR) 

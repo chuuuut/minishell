@@ -3,6 +3,8 @@ NAME = libft.a
 # Directories
 SRC_DIR = src
 B_DIR = bonus_src
+SAFE_DIR = safe
+UTILS_DIR = utils
 FT_PRINTF_DIR = ft_printf
 GNL_DIR = gnl
 INCLUDES = includes
@@ -47,6 +49,7 @@ SRC_FILES := \
 	ft_putnbr_fd.c \
 	ft_strsep.c \
 	ft_strcspn.c \
+	ft_isspace.c \
 
 # Bonus Sources
 B_SRC := \
@@ -59,6 +62,13 @@ B_SRC := \
 	ft_lstclear.c \
 	ft_lstiter.c \
 	ft_lstmap.c \
+
+#Safe fcts (with securities)
+SAFE := \
+	alloc.c \
+
+UTILS := \
+	error_exit.c \
 
 # Sources ft_printf
 PRINTF_FILES := \
@@ -85,13 +95,15 @@ GNL_FILES := \
 	get_next_line.c \
 
 #Path for sources
-VPATH = $(SRC_DIR) $(B_DIR) $(FT_PRINTF_DIR) $(GNL_DIR)
+VPATH = $(SRC_DIR) $(B_DIR) $(FT_PRINTF_DIR) $(GNL_DIR) $(SAFE_DIR) $(UTILS_DIR)
 
 # Object files
 OBJ_FILES = $(addprefix $(OBJ_DIR)/$(SRC_DIR)/, $(SRC_FILES:.c=.o)) \
 			$(addprefix $(OBJ_DIR)/$(FT_PRINTF_DIR)/, $(PRINTF_FILES:.c=.o)) \
 			$(addprefix $(OBJ_DIR)/$(GNL_DIR)/, $(GNL_FILES:.c=.o)) \
-			$(addprefix $(OBJ_DIR)/$(B_DIR)/, $(B_SRC:.c=.o))
+			$(addprefix $(OBJ_DIR)/$(B_DIR)/, $(B_SRC:.c=.o)) \
+			$(addprefix $(OBJ_DIR)/$(SAFE_DIR)/, $(SAFE:.c=.o)) \
+			$(addprefix $(OBJ_DIR)/$(UTILS_DIR)/, $(UTILS:.c=.o))
 
 # Compilation
 CC = gcc -g

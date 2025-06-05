@@ -1,42 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 18:29:44 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/05 19:33:20 by tcali            ###   ########.fr       */
+/*   Created: 2025/06/05 20:02:22 by tcali             #+#    #+#             */
+/*   Updated: 2025/06/05 20:11:21 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+int	ft_isspace(char c)
 {
-	char	*line;
-	char	**tokens;
-
-	line = NULL;
-	tokens = NULL;
-	while (1)
-	{
-		line = readline("minishell>");
-		if (!line)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (*line)
-			add_history(line);
-		tokens = parse_line(line);
-		if (!tokens)
-		{
-			printf("Error parsing line\n");
-			break ;
-		}
-		//printf("%s\n", line);
-		free(line);
-	}
-	return (0);
+	return (c == 32 || (c >= 9 && c <= 13));
 }

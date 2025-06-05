@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 22:02:06 by tcali             #+#    #+#             */
-/*   Updated: 2025/05/12 15:22:23 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/05 20:11:30 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+int		ft_isspace(char c);
 /* ************************************************************************** */
 //Bonus Part
 t_list	*ft_lstnew(t_content content);
@@ -84,5 +85,11 @@ void	ft_lstclear(t_list **lst, void (*del)(t_content));
 void	ft_lstiter(t_list *lst, t_content (*f)(t_content));
 t_list	*ft_lstmap(t_list *lst, t_content (*f)(t_content),
 			void (*del)(t_content));
+
+//Safe
+void	*safe_malloc(size_t bytes);
+
+//Utils
+void	error_exit(const char *error);
 
 #endif
