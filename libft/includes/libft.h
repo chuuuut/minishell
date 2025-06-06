@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 22:02:06 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/05 20:11:30 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/06 15:58:25 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_isspace(char c);
+char	*ft_strndup(const char *src, size_t len);
 /* ************************************************************************** */
 //Bonus Part
 t_list	*ft_lstnew(t_content content);

@@ -6,11 +6,23 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:29:44 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/05 19:33:20 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/06 16:03:09 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_tokens(char **tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		printf("tokens[%d] = [%s]\n", i, tokens[i]);
+		i++;
+	}
+}
 
 int	main(void)
 {
@@ -35,7 +47,8 @@ int	main(void)
 			printf("Error parsing line\n");
 			break ;
 		}
-		//printf("%s\n", line);
+		printf("%s\n", line);
+		print_tokens(tokens);
 		free(line);
 	}
 	return (0);

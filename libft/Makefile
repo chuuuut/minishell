@@ -50,6 +50,7 @@ SRC_FILES := \
 	ft_strsep.c \
 	ft_strcspn.c \
 	ft_isspace.c \
+	ft_strndup.c \
 
 # Bonus Sources
 B_SRC := \
