@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:29:44 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/06 17:39:08 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/06 18:17:44 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,13 @@ void	execute_command(char *command, char **env)
 	{
 		args = ft_split(command, ' ');
 		if (!args || !args[0])
-			error_exit("invalid command");
+			printf("invalid command\n");
 		path = get_command_path(args[0], env);
 		if (!path)
 		{
 			ft_printf_fd(2, "%s : command not found\n", args[0]);
 			free_array(args);
-			exit(127);
+			//exit(127);
 		}
 	}
 	if (execve(path, args, env) == -1)
@@ -135,8 +135,17 @@ void	execute_command(char *command, char **env)
 		if (path != args[0])
 			free(path);
 		free_array(args);
-		error_exit("error executing command");
+		printf("error executing command");
 	}
+}
+
+void	handle_sigint(int sig)
+{
+	(void)sig;
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	write(1, "\n", 1);
+	rl_redisplay();
 }
 
 int	main(int ac, char **av, char **envp)
@@ -149,6 +158,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	line = NULL;
 	tokens = NULL;
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("minishell>");
