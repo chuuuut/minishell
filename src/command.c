@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:30:52 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/07 17:57:08 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/08 17:19:20 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*get_command_path(char *cmd, char **env)
 	return (bin);
 }
 
-void	split_cmd(char *command, char **env, char ***args, char **path)
+int	split_cmd(char *command, char **env, char ***args, char **path)
 {
 	*args = ft_split(command, ' ');
 	if (!*args || !*args[0])
@@ -69,8 +69,9 @@ void	split_cmd(char *command, char **env, char ***args, char **path)
 	{
 		ft_printf_fd(2, "%s : command not found\n", (*args)[0]);
 		free_array(*args);
-		return ;
+		return (-1);
 	}
+	return (0);
 }
 
 void	execute_command(char *command, char **env)
@@ -91,7 +92,10 @@ void	execute_command(char *command, char **env)
 		path = ft_strdup("/bin/sh");
 	}
 	else
-		split_cmd(command, env, &args, &path);
+	{
+		if (split_cmd(command, env, &args, &path) == -1)
+			return ;
+	}
 	if (execve(path, args, env) == -1)
 	{
 		if (path != args[0])

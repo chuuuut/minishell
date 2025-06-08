@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:29:44 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/07 18:11:47 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/08 17:12:20 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,27 @@
 
 void	fork_process(t_data *data)
 {
-	data->pid1 = fork();
-	if (data->pid1 == 0)
+	int	i;
+
+	i = 0;
+	while (data->cmd[i])
 	{
-		execute_command(data->cmd1, data->envp);
-		exit(1);
+		data->pid = fork();
+		if (data->pid == 0)
+		{
+			execute_command(data->cmd[i], data->envp);
+			exit(1);
+		}
+		else if (data->pid > 0)
+			wait(NULL);
+		else
+			perror("fork");
+		i++;
 	}
-	else if (data->pid1 > 0)
-		wait(NULL);
-	else
-		perror("fork");
+	//free_array(data->cmd);
 }
 
-void	get_line(t_data *data, char **envp, char *line, char **tokens)
+void	get_line(t_data *data, char **envp, char *line)
 {
 	while (1)
 	{
@@ -46,22 +54,23 @@ void	get_line(t_data *data, char **envp, char *line, char **tokens)
 		if (!line)
 		{
 			printf("exit\n");
+			free_minishell(data);
 			break ;
 		}
 		if (*line)
 			add_history(line);
-		tokens = parse_line(line);
-		if (!tokens)
+		data->tokens = parse_line(line);
+		if (!data->tokens)
 		{
 			printf("Error parsing line\n");
 			break ;
 		}
 		//printf("%s\n", line);
 		//print_tokens(tokens);
-		init_data(data, tokens, envp);
+		init_data(data, envp);
 		fork_process(data);
 		free(line);
-		free(tokens);
+		//free_array(data->tokens);
 	}
 }
 
@@ -69,14 +78,13 @@ int	main(int ac, char **av, char **envp)
 {
 	t_data	data;
 	char	*line;
-	char	**tokens;
 
 	(void)ac;
 	(void)av;
 	line = NULL;
-	tokens = NULL;
+	data.tokens = NULL;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
-	get_line(&data, envp, line, tokens);
+	get_line(&data, envp, line);
 	return (0);
 }

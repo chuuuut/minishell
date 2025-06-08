@@ -52,11 +52,10 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	@make -C $(MLX_DIR) clean
 
 re: fclean all
 
 debug : CFLAGS += -g
-debug : $(NAME)
+debug : re
 
 .PHONY: all clean fclean re debug
