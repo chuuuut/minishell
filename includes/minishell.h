@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:30:16 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/08 17:20:02 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:39:02 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,39 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <stdbool.h>
+
+typedef enum e_tkn_code
+{
+	CMD,
+	ARG,
+	IN,
+	OUT,
+	APPEND,
+	HEREDOC,
+	PIPE,
+	AND,
+	OR,
+	SEP,
+}		t_tkn_code;
+
+typedef struct s_token
+{
+	char			*str;
+	int				pos;
+	t_tkn_code		type;
+	struct s_token	*prev;
+	struct s_token	*next;
+}					t_token;
 
 typedef struct s_data
 {
 	int		pipe_fd[2];
 	pid_t	pid;
 	pid_t	pid2;
-	char	**cmd;
 	char	*line;
 	char	**tokens;
+	t_token	*token;
 	char	**envp;
 	char	*file1;
 	char	*file2;
@@ -37,6 +61,8 @@ typedef struct s_data
 
 //parse.c
 char	**parse_line(const char *line);
+bool	is_redirection(char *str);
+void	identify_tokens(t_data *data);
 
 //command.c
 int		split_cmd(char *command, char **env, char ***args, char **path);
@@ -53,6 +79,13 @@ void	init_data(t_data *data, char **env);
 //utils.c
 void	free_minishell(t_data *data);
 void	free_array(char **array);
+void	free_list(t_token **lst);
 
+//list.c
+t_token	*new_token(char *str, int i);
+void	token_add_back(t_token **lst, t_token *new);
+void	create_add_token(t_data *data);
+
+//lbft
 char	*ft_str_threejoin(char const *s1, char const *s2, char const *s3);;
 #endif

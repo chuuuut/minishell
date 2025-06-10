@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:29:44 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/08 17:12:20 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:09:59 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,23 @@
 
 void	fork_process(t_data *data)
 {
-	int	i;
+	t_token	*current;
 
-	i = 0;
-	while (data->cmd[i])
+	current = data->token;
+	while (current)
 	{
 		data->pid = fork();
-		if (data->pid == 0)
+		if (data->pid == 0 && current->type == CMD)
 		{
-			execute_command(data->cmd[i], data->envp);
+			execute_command(data->token->str, data->envp);
 			exit(1);
 		}
 		else if (data->pid > 0)
 			wait(NULL);
 		else
 			perror("fork");
-		i++;
+		current = current->next;
 	}
-	//free_array(data->cmd);
 }
 
 void	get_line(t_data *data, char **envp, char *line)

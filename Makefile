@@ -10,6 +10,7 @@ INCLUDE_DIR = includes
 SRC := \
 	command.c \
 	init.c \
+	list.c \
 	main.c \
 	parse.c \
 	signals.c \

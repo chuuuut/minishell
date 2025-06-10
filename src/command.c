@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:30:52 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/08 17:19:20 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:59:20 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,18 @@ int	split_cmd(char *command, char **env, char ***args, char **path)
 	return (0);
 }
 
+char	*exec_bin(char *command, char **args)
+{
+	args = malloc(sizeof(char *) * 4);
+	if (!args)
+		error_exit("malloc failed");
+	args[0] = ft_strdup("/bin/sh");
+	args[1] = ft_strdup("-c");
+	args[2] = ft_strdup(command);
+	args[3] = NULL;
+	return (ft_strdup("/bin/sh"));
+}
+
 void	execute_command(char *command, char **env)
 {
 	char	**args;
@@ -81,16 +93,7 @@ void	execute_command(char *command, char **env)
 
 	if (ft_strchr(command, ';') || ft_strchr(command, '&')
 		|| ft_strchr(command, '|') || ft_strchr(command, '*'))
-	{
-		args = malloc(sizeof(char *) * 4);
-		if (!args)
-			error_exit("malloc failed");
-		args[0] = ft_strdup("/bin/sh");
-		args[1] = ft_strdup("-c");
-		args[2] = ft_strdup(command);
-		args[3] = NULL;
-		path = ft_strdup("/bin/sh");
-	}
+		path = exec_bin(command, args);
 	else
 	{
 		if (split_cmd(command, env, &args, &path) == -1)
