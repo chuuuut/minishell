@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:29:44 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:33:53 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 13:38:29 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ void	fork_process(t_data *data)
 		if (current->type == CMD)
 		{
 			if (is_builtin(current->str))
-			{
 				exec_builtin(current);
-				// return ;
-			}
 			data->pid = fork();
 			if (data->pid == 0)
 			{
