@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:41:32 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:19:23 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 13:44:05 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_builtin(char *cmd)
 		|| !ft_strncmp(cmd, "exit", 5));
 }
 
-int	exec_builtin(t_token *token/*, t_data *data*/)
+int	exec_builtin(t_token *token, t_data *data)
 {
 	if (!ft_strncmp(token->str, "echo", 5))
 		return (builtin_echo(token));
@@ -31,8 +31,8 @@ int	exec_builtin(t_token *token/*, t_data *data*/)
 	// 	return (builtin_cd(token, data));
 	// if (!ft_strncmp(token->str, "pwd", 4))
 	// 	return (builtin_pwd());
-	// if (!ft_strncmp(token->str, "exit", 5))
-	// 	return (builtin_exit(token, data));
+	if (!ft_strncmp(token->str, "exit", 5))
+		return (builtin_exit(data));
 	return (1);
 }
 
@@ -60,3 +60,9 @@ int	builtin_echo(t_token *token)
 	return (0);
 }
 
+int	builtin_exit(t_data *data)
+{
+	free_minishell(data);
+	printf("exit\n");
+	exit(EXIT_SUCCESS);
+}

@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:10:02 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:29:58 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 13:39:42 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,5 @@ void	create_add_token(t_data *data)
 		i++;
 	}
 	check_type(data->token);
-	print_token(data);
+	//print_token(data);
 }
