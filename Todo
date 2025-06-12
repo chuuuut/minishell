@@ -1,11 +1,11 @@
 *************************** Mandatory ************************
 
-• Display prompt when waiting for a new command
+• Display prompt when waiting for a new command +++DONE+++
 
-• Have a working history
+• Have a working history +++DONE+++
 
-• Search and launch the right exec (PATH or relative/absolute)
-see pipex my friend
+• Search and launch the right exec (PATH or relative/absolute) +++DONE+++
+see pipex my friend +++DONE+++
 
 • Use at most one global variable to indicate a received
 signal
@@ -37,7 +37,7 @@ their values.
 recently executed foreground pipeline.
 
 • Handle ctrl + C, ctrl + D and ctrl + \ which should behave
-like in bash.
+like in bash. +++DONE+++
 
 • In interactive mode:
 	◦ ctrl-C displays a new prompt on a new line.
@@ -45,13 +45,13 @@ like in bash.
 	◦ ctrl-\ does nothing.
 
 • Your shell must implement the following built-in commands:
-	◦ echo with option -n
+	◦ echo with option -n +++DONE+++
 	◦ cd with only a relative or absolute path
-	◦ pwd with no options
+	◦ pwd with no options +++DONE+++ (I THINK ??)
 	◦ export with no options
 	◦ unset with no options
 	◦ env with no options or arguments
-	◦ exit with no options
+	◦ exit with no options +++DONE+++
 
 ************************* Bonus part *************************
 
