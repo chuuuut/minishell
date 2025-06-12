@@ -6,11 +6,34 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 19:26:29 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/10 15:10:54 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 14:39:05 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	count_tokens(char const *s)
+{
+	size_t	i;
+	int		in_word;
+	int		word_count;
+
+	i = 0;
+	in_word = 0;
+	word_count = 0;
+	while (s[i])
+	{
+		if (!ft_isspace(s[i]) && in_word == 0)
+		{
+			in_word = 1;
+			word_count++;
+		}
+		else if (ft_isspace(s[i]))
+			in_word = 0;
+		i++;
+	}
+	return (word_count);
+}
 
 char	**parse_line(const char *line)
 {
@@ -19,14 +42,14 @@ char	**parse_line(const char *line)
 	int			i;
 	int			len;
 
-	tokens = safe_malloc(sizeof(char) * 100);
+	tokens = safe_malloc(sizeof(char *) * (count_tokens(line) + 1));
 	i = 0;
 	len = 0;
 	while (*line)
 	{
 		while (*line && ft_isspace(*line))
 			line++;
-		if (!line)
+		if (!*line)
 			break ;
 		start = line;
 		while (*line && !ft_isspace(*line))

@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:29:44 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:44:32 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 14:50:26 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,19 @@ void	fork_process(t_data *data)
 		{
 			if (is_builtin(current->str))
 				exec_builtin(current, data);
-			data->pid = fork();
-			if (data->pid == 0)
-			{
-				execute_command(data->token->str, data->envp);
-				exit(1);
-			}
-			else if (data->pid > 0)
-				wait(NULL);
 			else
-				perror("fork");
+			{
+				data->pid = fork();
+				if (data->pid == 0)
+				{
+					execute_command(data->token->str, data->envp);
+					exit(1);
+				}
+				else if (data->pid > 0)
+					wait(NULL);
+				else
+					perror("fork");
+			}
 		}
 		current = current->next;
 	}
@@ -57,12 +60,11 @@ void	get_line(t_data *data, char **envp, char *line)
 			printf("Error parsing line\n");
 			break ;
 		}
-		//printf("%s\n", line);
-		//print_tokens(tokens);
 		init_data(data, envp);
 		fork_process(data);
 		free(line);
-		//free_array(data->tokens);
+		free_list(&data->token);
+		data->token = NULL;
 	}
 }
 

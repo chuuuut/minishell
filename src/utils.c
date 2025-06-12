@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:35:34 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:27:20 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 14:48:44 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	free_minishell(t_data *data)
 {
 	if (!data)
 		return ;
-	free_array(data->tokens);
 	free_list(&data->token);
 	rl_clear_history();
 }
@@ -35,17 +34,17 @@ void	free_array(char **array)
 
 void	free_list(t_token **lst)
 {
-	t_token	*current;
-	t_token	*next;
+	t_token	*tmp;
 
-	current = *lst;
-	while (current)
+	while (*lst)
 	{
-		next = current->next;
-		free(current);
-		current = next;
+		tmp = (*lst)->next;
+		free((*lst)->str);
+		free(*lst);
+		*lst = tmp;
 	}
 }
+
 
 void	check_type(t_token *token)
 {

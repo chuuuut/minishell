@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:30:16 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:44:12 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 14:06:42 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		exec_builtin(t_token *token, t_data *data);
 int		is_builtin(char *cmd);
 int		builtin_echo(t_token *token);
 int		builtin_exit(t_data *data);
+int		builtin_pwd(void);
 
 //lbft
 char	*ft_str_threejoin(char const *s1, char const *s2, char const *s3);

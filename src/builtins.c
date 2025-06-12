@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:41:32 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:44:05 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 14:10:53 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	exec_builtin(t_token *token, t_data *data)
 		return (builtin_echo(token));
 	// if (!ft_strncmp(token->str, "cd", 3))
 	// 	return (builtin_cd(token, data));
-	// if (!ft_strncmp(token->str, "pwd", 4))
-	// 	return (builtin_pwd());
+	if (!ft_strncmp(token->str, "pwd", 4))
+		return (builtin_pwd());
 	if (!ft_strncmp(token->str, "exit", 5))
 		return (builtin_exit(data));
 	return (1);
@@ -65,4 +65,20 @@ int	builtin_exit(t_data *data)
 	free_minishell(data);
 	printf("exit\n");
 	exit(EXIT_SUCCESS);
+	return (0);
+}
+
+int	builtin_pwd(void)
+{
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		perror("getcwd\n");
+		return (1);
+	}
+	printf("%s\n", cwd);
+	free(cwd);
+	return (0);
 }

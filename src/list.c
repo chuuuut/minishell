@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:10:02 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:39:42 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 14:42:13 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_token	*new_token(char *str, int i)
 	t_token	*node;
 
 	node = safe_malloc(sizeof(t_token));
-	node->str = str;
+	node->str = ft_strdup(str);
 	node->pos = i;
 	node->type = get_token_type(str);
 	node->next = NULL;
@@ -70,6 +70,7 @@ void	create_add_token(t_data *data)
 		token_add_back(&data->token, new);
 		i++;
 	}
+	free_array(data->tokens);
 	check_type(data->token);
 	//print_token(data);
 }
