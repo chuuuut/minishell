@@ -8,11 +8,14 @@ INCLUDE_DIR = includes
 
 # Sources
 SRC := \
+	builtins.c \
 	command.c \
+	debug.c \
 	init.c \
 	list.c \
 	main.c \
 	parse.c \
+	path.c \
 	signals.c \
 	utils.c \
 

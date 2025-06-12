@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:30:16 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/10 15:39:02 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 13:29:36 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,13 @@ char	**parse_line(const char *line);
 bool	is_redirection(char *str);
 void	identify_tokens(t_data *data);
 
+//path.c
+char	*find_cmd_path(char *cmd, char **path);
+char	*get_cmd_path(char *cmd, char **env);
+
 //command.c
 int		split_cmd(char *command, char **env, char ***args, char **path);
 void	execute_command(char *command, char **env);
-char	*get_command_path(char *cmd, char **env);
-char	*find_command(char *cmd, char **path);
 
 //signals.c
 void	handle_sigint(int sig);
@@ -80,12 +82,22 @@ void	init_data(t_data *data, char **env);
 void	free_minishell(t_data *data);
 void	free_array(char **array);
 void	free_list(t_token **lst);
+void	check_type(t_token *token);
 
 //list.c
 t_token	*new_token(char *str, int i);
 void	token_add_back(t_token **lst, t_token *new);
 void	create_add_token(t_data *data);
 
+//builtins.c
+int		builtin_echo(t_token *token);
+int		exec_builtin(t_token *token/*, t_data *data*/);
+int		is_builtin(char *cmd);
+
 //lbft
-char	*ft_str_threejoin(char const *s1, char const *s2, char const *s3);;
+char	*ft_str_threejoin(char const *s1, char const *s2, char const *s3);
+
+//debug.c
+void	print_token(t_data *data);
+
 #endif

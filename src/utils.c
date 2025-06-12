@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:35:34 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/10 15:35:33 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 13:27:20 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,24 @@ void	free_list(t_token **lst)
 		next = current->next;
 		free(current);
 		current = next;
+	}
+}
+
+void	check_type(t_token *token)
+{
+	t_token	*current;
+
+	current = token;
+	while (current)
+	{
+		if (current->pos >= 1)
+		{
+			printf("%d", current->prev->type);
+			if (current->type == CMD && current->prev->type == CMD)
+			{
+				current->type = ARG;
+			}
+		}
+		current = current->next;
 	}
 }

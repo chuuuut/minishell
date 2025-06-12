@@ -6,55 +6,11 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:30:52 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/10 15:59:20 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 13:24:14 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*find_command(char *cmd, char **path)
-{
-	char	*cmd_path;
-	int		i;
-
-	i = 0;
-	while (path[i])
-	{
-		cmd_path = ft_str_threejoin(path[i], "/", cmd);
-		if (!cmd_path)
-			return (NULL);
-		if (access(cmd_path, F_OK) == 0)
-			return (cmd_path);
-		free(cmd_path);
-		i++;
-	}
-	return (NULL);
-}
-
-char	*get_command_path(char *cmd, char **env)
-{
-	char	**path;
-	char	*bin;
-	int		i;
-
-	if (cmd[0] == '/')
-	{
-		if (access(cmd, F_OK) == 0)
-			return (ft_strdup(cmd));
-		return (NULL);
-	}
-	i = 0;
-	while (ft_strnstr(env[i], "PATH=", 5) == 0)
-		i++;
-	path = ft_split(env[i] + 5, ':');
-	bin = find_command(cmd, path);
-	if (!bin)
-	{
-		free_array(path);
-		return (NULL);
-	}
-	return (bin);
-}
 
 int	split_cmd(char *command, char **env, char ***args, char **path)
 {
@@ -64,7 +20,7 @@ int	split_cmd(char *command, char **env, char ***args, char **path)
 		free_array(*args);
 		error_exit("command not found\n");
 	}
-	*path = get_command_path((*args)[0], env);
+	*path = get_cmd_path((*args)[0], env);
 	if (!*path)
 	{
 		ft_printf_fd(2, "%s : command not found\n", (*args)[0]);

@@ -6,23 +6,11 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:29:44 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/10 15:09:59 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/12 13:33:53 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//void	print_tokens(char **tokens)
-//{
-//	int	i;
-
-//	i = 0;
-//	while (tokens[i])
-//	{
-//		printf("tokens[%d] = [%s]\n", i, tokens[i]);
-//		i++;
-//	}
-//}
 
 void	fork_process(t_data *data)
 {
@@ -31,16 +19,24 @@ void	fork_process(t_data *data)
 	current = data->token;
 	while (current)
 	{
-		data->pid = fork();
-		if (data->pid == 0 && current->type == CMD)
+		if (current->type == CMD)
 		{
-			execute_command(data->token->str, data->envp);
-			exit(1);
+			if (is_builtin(current->str))
+			{
+				exec_builtin(current);
+				// return ;
+			}
+			data->pid = fork();
+			if (data->pid == 0)
+			{
+				execute_command(data->token->str, data->envp);
+				exit(1);
+			}
+			else if (data->pid > 0)
+				wait(NULL);
+			else
+				perror("fork");
 		}
-		else if (data->pid > 0)
-			wait(NULL);
-		else
-			perror("fork");
 		current = current->next;
 	}
 }
