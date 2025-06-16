@@ -6,11 +6,51 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:29:44 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 14:50:26 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/16 17:07:42 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	child(t_data *data)
+{
+	//signal(SIGQUIT, SIG_DFL);
+	//signal(SIGINT, SIG_DFL);
+	execute_command(data->token->str, data->envp);
+	exit(1);
+}
+
+void	parent(t_data *data)
+{
+	int	status;
+	int	sig;
+
+	waitpid(data->pid, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGQUIT)
+			printf("Quit (Core dumped)\n");
+		else if (sig == SIGINT)
+			printf("\n");
+	}
+}
+
+void	check_ctrl_slash(t_token *current)
+{
+	t_token	*next_two;
+
+	next_two = NULL;
+	if (current->next && current->next->str)
+	{
+		if (current->next->next)
+			next_two = current->next->next;
+		current->str = ft_str_threejoin(current->str, " ", current->next->str);
+		free(current->next->str);
+		free(current->next);
+		current->next = next_two;
+	}
+}
 
 void	fork_process(t_data *data)
 {
@@ -21,18 +61,17 @@ void	fork_process(t_data *data)
 	{
 		if (current->type == CMD)
 		{
+			if (!ft_strncmp(current->str, "sleep", 5)) // just to check for ctrl + /
+				check_ctrl_slash(current);
 			if (is_builtin(current->str))
 				exec_builtin(current, data);
 			else
 			{
 				data->pid = fork();
 				if (data->pid == 0)
-				{
-					execute_command(data->token->str, data->envp);
-					exit(1);
-				}
+					child(data);
 				else if (data->pid > 0)
-					wait(NULL);
+					parent(data);
 				else
 					perror("fork");
 			}
@@ -45,7 +84,7 @@ void	get_line(t_data *data, char **envp, char *line)
 {
 	while (1)
 	{
-		line = readline("minishell>");
+		line = readline(PROMPT);
 		if (!line)
 		{
 			printf("exit\n");
@@ -80,5 +119,6 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	get_line(&data, envp, line);
+	reset_colors();
 	return (0);
 }

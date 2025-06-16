@@ -59,7 +59,7 @@ fclean: clean
 
 re: fclean all
 
-debug : CFLAGS += -g
+debug : CFLAGS += -g -D PROMPT="\"\\033[1;36mdebugshell \$ \033[1;34m\""
 debug : re
 
 .PHONY: all clean fclean re debug

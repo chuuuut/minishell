@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:35:34 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 14:48:44 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:24:27 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	check_type(t_token *token)
 	{
 		if (current->pos >= 1)
 		{
-			printf("%d", current->prev->type);
+			//printf("%d", current->prev->type);
 			if (current->type == CMD && current->prev->type == CMD)
 			{
 				current->type = ARG;

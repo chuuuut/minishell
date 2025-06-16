@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 18:30:16 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 14:06:42 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/16 17:08:00 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <stdbool.h>
+# include "colors.h"
 
 typedef enum e_tkn_code
 {
@@ -49,7 +50,6 @@ typedef struct s_data
 {
 	int		pipe_fd[2];
 	pid_t	pid;
-	pid_t	pid2;
 	char	*line;
 	char	**tokens;
 	t_token	*token;
@@ -101,5 +101,18 @@ char	*ft_str_threejoin(char const *s1, char const *s2, char const *s3);
 
 //debug.c
 void	print_token(t_data *data);
+void	reset_colors(void);
 
 #endif
+/*
+Couleur	Code
+Noir	\033[0;30m
+Rouge	\033[0;31m
+Vert	\033[0;32m
+Jaune	\033[0;33m
+Bleu	\033[0;34m
+Magenta	\033[0;35m
+Cyan	\033[0;36m
+Gris clair	\033[0;37m
+Reset (par défaut)	\033[0m
+*/

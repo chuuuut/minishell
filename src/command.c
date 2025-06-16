@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:30:52 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:24:14 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/16 11:43:28 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	execute_command(char *command, char **env)
 		if (split_cmd(command, env, &args, &path) == -1)
 			return ;
 	}
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 	if (execve(path, args, env) == -1)
 	{
 		if (path != args[0])

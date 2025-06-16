@@ -6,7 +6,7 @@
 /*   By: tcali <tcali@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:28:45 by tcali             #+#    #+#             */
-/*   Updated: 2025/06/12 13:29:53 by tcali            ###   ########.fr       */
+/*   Updated: 2025/06/16 17:07:38 by tcali            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,7 @@ void	print_token(t_data *data)
 	}
 }
 
+void	reset_colors(void)
+{
+	printf("%s", C_RST);
+}
