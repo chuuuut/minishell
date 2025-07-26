@@ -1,4 +1,72 @@
 // erreurs de syntaxe :
-// - rien avant pipe, rien apres pipe
-// - simples et doubles quotes verif bienn fermees
+//	OK	- rien avant pipe, rien apres pipe
+// - simples et doubles quotes verif bienn fermees je t'aime ma femme <3
 // - < et > : verif qu'il y a qqch apres autre qu'un pipe
+
+#include "../includes/minishell.h"
+
+int	is_char_space(char *line)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (ft_isspace(line[i]))
+			count++;
+		i++;
+	}
+	if (count == i)
+		return (1);
+	return (0);
+}
+
+int	nb_of_pipes(char *line)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] == '|')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+int	ft_tablen(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+int	check_empty_pipes(char *line)
+{
+	int		i;
+	int		nb_pipes;
+	char	**pipes_tab;
+
+	pipes_tab = ft_split(line, '|');
+	if (!pipes_tab)
+		return (-1);
+	nb_pipes = nb_of_pipes(line);
+	if (nb_pipes != ft_tablen(pipes_tab) - 1)
+		return (0);
+	i = 0;
+	while (pipes_tab[i])
+	{
+		if (is_char_space(pipes_tab[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}

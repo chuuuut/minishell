@@ -1,6 +1,4 @@
-
 #include "../includes/minishell.h"
-
 
 int	is_prompt_space(char *line)
 {
@@ -30,6 +28,7 @@ int	main(void)
 		if (is_prompt_space(line))
 			continue ;
 		printf("result : %s\n", line);
+		printf("%d\n", check_empty_pipes(line));
 		add_history(line);
 		free(line);
 	}

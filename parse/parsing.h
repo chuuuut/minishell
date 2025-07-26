@@ -29,5 +29,10 @@ int		is_prompt_space(char *line);
 //				SIGNALS
 void    sh_ctrlc_behave(int signal);
 void	get_signal(void);
+//				SYNTAX
+int		is_char_space(char *line);
+int		nb_of_pipes(char *line);
+int		ft_tablen(char **tab);
+int		check_empty_pipes(char *line);
 
 #endif
