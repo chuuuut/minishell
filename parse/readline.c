@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+
 #include "../includes/minishell.h"
 
 
@@ -27,7 +24,7 @@ int	main(void)
 {
 	char	*line;
 
-	using_history();
+	get_signal();
 	while((line = readline("> ")) != NULL)
 	{
 		if (is_prompt_space(line))
@@ -36,6 +33,6 @@ int	main(void)
 		add_history(line);
 		free(line);
 	}
-	clear_history();
+	rl_clear_history();
 	return (0);
 }
