@@ -24,7 +24,7 @@
 # include <sys/stat.h>
 # include <stdbool.h>
 # include "colors.h"
-# include "parsing.h"
+# include "../parse/parsing.h"
 
 typedef enum e_tkn_code
 {
