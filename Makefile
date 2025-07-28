@@ -30,6 +30,7 @@ PARSE := \
 	syntax.c \
 	parsing_utils.c \
 	open_quotes.c \
+	open_quotes2.c \
 	#name of files
 
 #Path to sources

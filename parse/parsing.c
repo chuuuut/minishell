@@ -55,19 +55,19 @@ Outfiles = $PWD
 
 #include "../includes/minishell.h"
 
-char	*expand_cmd(char **argv, char **env)
-{
-	int	i;
+// char	*expand_cmd(char **argv, char **env)
+// {
+// 	int	i;
 
-	i = 1;
-	while (argv[i])
-	{
-		if (ft_strncmp(argv[i][0], '$', ft_strlen(argv[i])) == 0)
-		{
+// 	i = 1;
+// 	while (argv[i])
+// 	{
+// 		if (ft_strncmp(argv[i][0], '$', ft_strlen(argv[i])) == 0)
+// 		{
 			
-		}
-	}
-	// checker si la commande existe dans env
-	// si elle existe, recuperer le chemin
-	// sinon, checker ce que ca fait dans le bash --posix et renvoyer la meme chose
-}
+// 		}
+// 	}
+// 	// checker si la commande existe dans env
+// 	// si elle existe, recuperer le chemin
+// 	// sinon, checker ce que ca fait dans le bash --posix et renvoyer la meme chose
+// }

@@ -12,7 +12,7 @@
 
 // erreurs de syntaxe :
 //	OK	- rien avant pipe, rien apres pipe
-// - simples et doubles quotes verif bienn fermees je t'aime ma femme <3
+// - simples et doubles quotes verif bien fermées je t'aime ma femme <3
 // - < et > : verif qu'il y a qqch apres autre qu'un pipe
 
 #include "../includes/minishell.h"

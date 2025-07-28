@@ -14,6 +14,7 @@
 # define MINISHELL_H
 # include "../libft/includes/libft.h"
 # include <unistd.h>
+# include <errno.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <readline/readline.h>

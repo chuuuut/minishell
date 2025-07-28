@@ -27,11 +27,12 @@ typedef struct	s_cmd
 typedef struct s_quotes
 {
 	int		i;
-	bool	odd_d_quot;
-	bool	odd_s_quot;
-	bool	open_s_quot;
-	bool	open_d_quot;
+	bool	odd_d_quote;
+	bool	odd_s_quote;
+	bool	open_s_quote;
+	bool	open_d_quote;
 	int		first_quote;
+	bool	char_quote;
 }	t_quotes;
 
 //				READLINE
@@ -46,7 +47,7 @@ int		check_empty_pipes(char *line);
 //				PARSING_UTILS
 void	ft_free_tab(char **str);
 int		ft_tablen(char **tab);
-//				OPEN_QUOTES
+//				OPEN_QUOTS
 char	is_quote_closed(t_quotes *quotes, char *str);
 
 #endif
