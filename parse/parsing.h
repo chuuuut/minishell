@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/15 12:56:26 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/07/28 18:38:38 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ typedef struct	s_cmd
 	// pour bien gerer les erreurs durant l'execution
 }	t_cmd;
 
+typedef struct s_quotes
+{
+	int		i;
+	bool	odd_d_quot;
+	bool	odd_s_quot;
+	bool	open_s_quot;
+	bool	open_d_quot;
+	int		first_quote;
+}	t_quotes;
+
 //				READLINE
 int		is_prompt_space(char *line);
 //				SIGNALS
@@ -32,7 +42,11 @@ void	get_signal(void);
 //				SYNTAX
 int		is_char_space(char *line);
 int		nb_of_pipes(char *line);
-int		ft_tablen(char **tab);
 int		check_empty_pipes(char *line);
+//				PARSING_UTILS
+void	ft_free_tab(char **str);
+int		ft_tablen(char **tab);
+//				OPEN_QUOTES
+char	is_quote_closed(t_quotes *quotes, char *str);
 
 #endif

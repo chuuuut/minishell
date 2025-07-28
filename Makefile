@@ -25,6 +25,11 @@ SRC := \
 
 PARSE := \
 	parsing.c \
+	readline.c \
+	signals.c \
+	syntax.c \
+	parsing_utils.c \
+	open_quotes.c \
 	#name of files
 
 #Path to sources

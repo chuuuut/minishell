@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:32:41 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/15 12:56:20 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/07/28 12:06:20 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ Outfiles = $PWD
 - checker `echo $nimp$HOME$nimp2` -> fait comme `echo $HOME`
 */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 char	*expand_cmd(char **argv, char **env)
 {

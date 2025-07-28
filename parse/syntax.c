@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 09:32:32 by chdoe             #+#    #+#             */
+/*   Updated: 2025/07/28 12:06:14 by chdoe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // erreurs de syntaxe :
 //	OK	- rien avant pipe, rien apres pipe
 // - simples et doubles quotes verif bienn fermees je t'aime ma femme <3
@@ -37,16 +49,6 @@ int	nb_of_pipes(char *line)
 		i++;
 	}
 	return (count);
-}
-
-int	ft_tablen(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
 }
 
 int	check_empty_pipes(char *line)
