@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:31:57 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/28 18:38:40 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/07/29 12:44:42 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ char	is_quote_closed(t_quotes *quotes, char *str)
 		return ('\'');
 	return (0);
 }
+
+int	
 
 //		code erreur : 127 quand je ferme avec quote
 //		code erreur : 2 quand Ctrl + D
