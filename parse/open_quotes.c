@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:31:57 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/29 12:44:42 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/07/29 18:53:21 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@
 "'"'"	-> ' open
 '"'"'	-> " open
 */
+
+//      mettre le sytax error errno en sortie 2
+// • Handle single quote -> prevent shell from interpreting the	Chloe
+// metacharacters in the quoted sequence.
+
+// • Handle double quotes -> prevents shell from interpreting the	Chloe
+// metacharacters in the quoted sequence except for $.
 
 void	init_quotes(t_quotes *quotes)
 {
@@ -100,20 +107,15 @@ char	is_quote_closed(t_quotes *quotes, char *str)
 	return (0);
 }
 
-int	
+// int	main(void)
+// {
+// 	t_quotes	*quotes;
 
-//		code erreur : 127 quand je ferme avec quote
-//		code erreur : 2 quand Ctrl + D
-
-int	main(void)
-{
-	t_quotes	*quotes;
-
-	quotes = malloc(sizeof(t_quotes));
-	if (!quotes)
-		return (errno);
-	init_quotes(quotes);
-	printf("%c\n", is_quote_closed(quotes, ""));
-	free(quotes);
-	return (0);
-}
+// 	quotes = malloc(sizeof(t_quotes));
+// 	if (!quotes)
+// 		return (errno);
+// 	init_quotes(quotes);
+// 	printf("%c\n", is_quote_closed(quotes, ""));
+// 	free(quotes);
+// 	return (0);
+// }

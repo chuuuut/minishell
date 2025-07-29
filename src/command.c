@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:30:52 by tcali             #+#    #+#             */
-/*   Updated: 2025/07/28 09:34:06 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/07/29 18:53:22 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	execute_command(char *command, char **env, t_token *token, t_data *data)
 	char	**args;
 	char	*path;
 
+	args = NULL;
 	printf("command : %s\n", command);
 	if (is_builtin(command))
 	{

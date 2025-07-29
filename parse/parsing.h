@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/28 18:38:38 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/07/29 18:53:18 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,15 @@ void	get_signal(void);
 int		is_char_space(char *line);
 int		nb_of_pipes(char *line);
 int		check_empty_pipes(char *line);
-//				PARSING_UTILS
+//				PARSING UTILS
 void	ft_free_tab(char **str);
 int		ft_tablen(char **tab);
-//				OPEN_QUOTS
+//				OPEN QUOTES
+void	init_quotes(t_quotes *quotes);
+char	first_quote(char *str);
+int		quotes_status(char *str, t_quotes *quotes, char c);
 char	is_quote_closed(t_quotes *quotes, char *str);
+//				PARSING ERRORS
+int		syntax_error(char *line, t_quotes *quotes);
 
 #endif
