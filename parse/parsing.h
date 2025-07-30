@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/29 18:53:18 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/07/30 15:29:18 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		is_prompt_space(char *line);
 //				SIGNALS
 void    sh_ctrlc_behave(int signal);
 void	get_signal(void);
-//				SYNTAX
+//				PIPES
 int		is_char_space(char *line);
 int		nb_of_pipes(char *line);
 int		check_empty_pipes(char *line);

@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:32:41 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/29 14:30:41 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/07/30 17:25:24 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,73 @@ Outfiles = $PWD
 - checker `echo $nimp$HOME$nimp2` -> fait comme `echo $HOME`
 */
 
+
+
+/*
+Timeline
+[readline->check Syntaxe->Pipe->expand (faire attention au quote)->tokenise(supprime les quote)]->EXEC
+
+---------------------------------------------
+-                 READLINE                  -
+---------------------------------------------
+readline va te donner la string qui est
+envoi dans le terminal il y a 2 possibilité:
+- Sois une string classique
+- Sois une string null
+
+Si la string est NULL == CTRL-D
+
+Si la string est classique commencer le parsing
+
+---------------------------------------------
+-             CHECK Syntaxe                 -
+---------------------------------------------
+
+Tu dois check que chaque quote est fermer
+que si il y a un pipe il y a un truc devant
+et derrier que si il y a >< que il y a un truc          OK
+derrier autre que un pipe
+
+---------------------------------------------
+-                   PIPE                    -
+---------------------------------------------
+
+Le plus simple serai de split sur les |
+Mais /!\ tu dois split que sur les | qui sont
+pas entre quote
+
+exemple : 
+- ls | cat
+tab[0] = ls;
+tab[1] = cat;
+- ls "| cat"
+tab[0] = ls "| cat"
+
+En gros les quotes fait que tu interprete le
+symbole comme un caracter et non un symbole
+
+---------------------------------------------
+-                   EXPAND                  -
+---------------------------------------------
+
+Tu fait les expand des $UNTRUC en checkant
+dans ton env en suite 3 possibilité:
+-sois $ solo et tu fait rien
+-sois $TRUCQUIEXISTE et la tu replace par la
+valeur de la variable
+-sois $TRUCQUIEXISTEPAS et la tu le supprime
+de la chaine de character
+
+---------------------------------------------
+-                TOKENISATION               -
+---------------------------------------------
+
+cmd = premier mot qui est pas une redirection
+args = tout mot qui est pas une redirection
+redirection = toute se qui a > < devant
+*/
+
+
 #include "../includes/minishell.h"
 
 // char	*expand_cmd(char **argv, char **env)
@@ -147,3 +214,9 @@ Outfiles = $PWD
 // 	// si elle existe, recuperer le chemin
 // 	// sinon, checker ce que ca fait dans le bash --posix et renvoyer la meme chose
 // }
+
+
+// fonction qui :
+// - checke si les pipes sont ok
+// - qui checke si les quotes sont ok
+// qui

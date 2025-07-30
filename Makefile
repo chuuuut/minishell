@@ -27,21 +27,21 @@ PARSE := \
 	parsing.c \
 	readline.c \
 	signals.c \
-	syntax.c \
+	pipes.c \
 	parsing_utils.c \
 	open_quotes.c \
-	open_quotes2.c \
+	parsing_errors.c \
 	#name of files
 
 #Path to sources
-VPATH = $(SRC_DIR) $(PARSE_DIR)
+VPATH = $(PARSE_DIR) #$(SRC_DIR)
 
 # Objects
-OBJ_FILES := $(addprefix $(OBJ_DIR)/$(SRC_DIR)/, $(SRC:.c=.o)) \
-	$(addprefix $(OBJ_DIR)/$(PARSE_DIR)/, $(PARSE:.c=.o)) \
+OBJ_FILES := $(addprefix $(OBJ_DIR)/$(PARSE_DIR)/, $(PARSE:.c=.o))
+#$(addprefix $(OBJ_DIR)/$(SRC_DIR)/, $(SRC:.c=.o))
 # Compilation
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror -I$(INCLUDE_DIR) -I$(LIBFT_DIR)
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -g3 -I$(INCLUDE_DIR) -I$(LIBFT_DIR)
 
 #Libraries
 LIBFT = $(LIBFT_DIR)/libft.a
