@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/30 15:29:18 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/06 15:49:26 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	s_cmd
 	// pour bien gerer les erreurs durant l'execution
 }	t_cmd;
 
-typedef struct s_quotes
+typedef struct	s_quotes
 {
 	int		i;
 	bool	odd_d_quote;
@@ -34,6 +34,12 @@ typedef struct s_quotes
 	int		first_quote;
 	bool	char_quote;
 }	t_quotes;
+
+typedef struct	s_inout_ope
+{
+	bool	is_file;
+	bool	is_cmd;
+}	t_inout_ope;
 
 //				READLINE
 int		is_prompt_space(char *line);
