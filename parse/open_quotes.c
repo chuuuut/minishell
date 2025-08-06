@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:31:57 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/30 15:29:21 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/05 18:22:28 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 
 // • Handle double quotes -> prevents shell from interpreting the		Chloe
 // metacharacters in the quoted sequence except for $.
+
+// structure où on sait quand on est dans une single quote avec un booléen
+//<3<3<3
 
 void	init_quotes(t_quotes *quotes)
 {
