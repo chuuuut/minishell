@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:35:24 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/06 15:49:24 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/07 17:06:51 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,50 @@
 // | `>>`       | **append redirection** operator | sortie en ajout (append)            |
 // | `<<`       | **here-document operator**      | début d’un *here-doc* (`<<EOF`)     |
 // | `<&`, `>&` | **file descriptor duplication** | duplication de descripteur (avancé) |
+
+
+// < file cmp |) file cmd | cmd | < file | file cmd < 
+
+// strchr en checkant s'il y a un truc entre le < et le ( | ou \0)
+// ! <<
+// checher si apres un chevron :
+//	-pas de \0 (+ espaces)
+//	-pas de | (+ espaces)
+//	-si <, valide
+//	<> marche (prend en infile, et en lecture/ecriture)
+//	cat < > out.txt invalide
+//	>< marche pas
+// cat < file1 < file2 valide
+
+
+// | Chevrons | Valide ?  | Signification          |
+// | -------- | --------- | ---------------------- |
+// | `>`      | ✅        | redirection stdout     |
+// | `<`      | ✅        | redirection stdin      |
+// | `>>`     | ✅        | append stdout          |
+// | `<<`     | ✅        | heredoc                |
+// | `<>`     | ✅        | open read/write (rare) |
+
+
+// ><       # interdit
+// <>>      # interdit
+// >><      # interdit
+// <<>      # interdit
+// <<>>     # interdit
+// <<<      # (⚠️ utilisé par Bash comme "here string", mais NON POSIX)
+// >><<     # interdit
+// <>><     # interdit
+// ><>      # interdit
+
+
+// | Forme            | Obligatoire ?     |
+// | ---------------- | ----------------- |
+// | `>`              | ✅                |
+// | `<`              | ✅                |
+// | `>>`, `<<`       | ✅                |
+// | `<>`             | ✅                |
+// | `2>`, `1<`       | ✅                |
+// | `3>`, `4<`, etc. | ✅ (si fd ouvert) |
 
 
 
