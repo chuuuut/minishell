@@ -77,12 +77,12 @@ int	quotes_status(char *str, t_quotes *quotes, char c)
 	return (i);
 }
 
-char	is_quote_closed(t_quotes *quotes, char *str)
+char	is_quote_closed(t_quotes *quotes, char *str, int end)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && i < end)
 	{
 		while (!first_quote(&str[i]) && str[i])
 			i++;
