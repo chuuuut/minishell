@@ -107,7 +107,7 @@ OBJ_FILES = $(addprefix $(OBJ_DIR)/$(SRC_DIR)/, $(SRC_FILES:.c=.o)) \
 			$(addprefix $(OBJ_DIR)/$(UTILS_DIR)/, $(UTILS:.c=.o))
 
 # Compilation
-CC = gcc -g
+CC = cc -g3
 CFLAGS = -Wall -Wextra -Werror -I $(INCLUDES)
 
 #Object directory

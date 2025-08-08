@@ -77,7 +77,7 @@
 
 
 // int	redirect_in(char *str, t_inout_ope *in, t_quotes *quotes)
-int	redirect_in(char *str, t_quotes *quotes)
+int	redirect_in(char *str)
 {
 	int	i;
 	
@@ -93,8 +93,6 @@ int	redirect_in(char *str, t_quotes *quotes)
 				i++;
 			if (str[i] == '<' || str[i] == '>' || str[i] == '|' || !str[i])
 				return (-1);
-			while (is_quote_closed(quotes, str, i))
-				i++;
 		}
 		i++;
 	}
@@ -107,6 +105,39 @@ void	init_inout(t_inout_ope *inout)
 	inout->is_cmd = false;
 }
 
+/*
+❌ Cas invalides (à détecter comme erreurs syntaxiques)
+
+XXX    | < file.txt
+        Pipe au début. Erreur potentielle : "syntax error near |"
+
+    < file.txt | | grep test
+        Double pipe sans commande entre les deux.
+
+    < file.txt >
+        Redirection de sortie sans spécification de fichier.
+
+❌ Quotes ouvertes non fermées
+
+    < "file.txt
+        Quote double ouverte, jamais fermée.
+        ➤ Erreur : "unclosed double quote"
+
+    < 'file.txt
+        Même problème avec quote simple.
+        ➤ Erreur : "unclosed single quote"
+
+    < "file.txt | grep something
+        Tout est dans une quote non fermée.
+        ➤ Ne jamais exécuter : tout est en attente de fermeture de la quote.
+
+    echo "salut | wc < file.txt
+        Le < est littéral car il est dans une quote ouverte.
+        ➤ Ce n’est pas une redirection, mais une chaîne de caractères (sauf si quote fermée ensuite).
+*/
+
+
+/*
 int	main(void)
 {
 	t_quotes	*quotes;
@@ -120,9 +151,11 @@ int	main(void)
 	// 	return (errno);
 	init_quotes(quotes);
 	// init_inout(inout);
-	// printf("%d\n", redirect_in("< file", inout, quotes));
-	printf("%d\n", redirect_in("< |", quotes));
+	// printf("%d\n", redirect_in("| < file.txt", inout, quotes));
+	printf("%d\n", redirect_in("< \"file.txt"));
 }
+*/
+
 
 
 // fonction qui checke si il y a qqch avant un pipe ou avant la fin apres un chevron

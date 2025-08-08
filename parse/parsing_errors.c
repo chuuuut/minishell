@@ -20,7 +20,7 @@ int	syntax_error(char *line, t_quotes *quotes)
 		// printf("Syntax error : empty pipe\n");
 		return (2);
 	}
-	if (is_quote_closed(quotes, line))
+	if (is_quote_closed(quotes, line, ft_strlen(line)))
 	{
 		ft_putstr_fd("Syntax error : open quote\n", 2);
 		// printf("Syntax error : open quote\n");
@@ -37,7 +37,7 @@ int	main(void)
 	if (!quotes)
 	return (errno);
 	init_quotes(quotes);
-	syntax_error("| |", quotes);
+	syntax_error("< \"file.txt", quotes);
 	free(quotes);
 	return (0);
 }

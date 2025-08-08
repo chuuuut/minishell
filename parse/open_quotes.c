@@ -84,12 +84,11 @@ char	is_quote_closed(t_quotes *quotes, char *str, int end)
 	i = 0;
 	while (str[i] && i < end)
 	{
-		while (!first_quote(&str[i]) && str[i])
-			i++;
-		if (first_quote(&str[i]) == '\"' && str[i])
+		if (first_quote(&str[i]) == '\"' && str[i] == '\"')
 			i += quotes_status(&str[i], quotes, '\"');
-		else if (first_quote(&str[i]) == '\'' && str[i])
+		else if (first_quote(&str[i]) == '\'' && str[i] == '\'')
 			i += quotes_status(&str[i], quotes, '\'');
+		i++;
 	}
 	if (quotes->open_d_quote == true)
 		return ('\"');

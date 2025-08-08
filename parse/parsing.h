@@ -62,5 +62,6 @@ void	init_inout(t_inout_ope *inout);
 //				PARSING ERRORS
 int		syntax_error(char *line, t_quotes *quotes);
 //				REDIRECT
+int		redirect_in(char *str);
 
 #endif
