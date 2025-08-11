@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 09:32:18 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:44:20 by chdoe            ###   ########.fr       */
+/*   Created: 2024/11/12 14:54:29 by chdoe             #+#    #+#             */
+/*   Updated: 2024/11/30 04:05:24 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+/*
+	isdigit() checks for a digit (0 through 9).
+*/
+#include "libft.h"
 
-int	is_prompt_space(char *line)
+int	ft_isdigit(int c)
 {
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
-	while (line[i])
-	{
-		if (is_space(line[i]))
-			len++;
-		i++;
-	}
-	if (i == len)
-		return (1);
+	if (c >= 48 && c <= 57)
+		return (2048);
 	return (0);
 }
+/*
+#include <ctype.h>
+#include <stdio.h>
 
-
+int	main(void)
+{
+	printf("c = %d\n", ft_isdigit('c'));
+	printf("c = %d\n", isdigit('c'));
+	printf("2 = %d\n", ft_isdigit('2'));
+	printf("2 = %d\n", isdigit('2'));
+	printf("$ = %d\n", ft_isdigit('$'));
+	printf("$ = %d\n", isdigit('$'));
+}
+*/

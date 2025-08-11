@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:31:57 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/05 18:22:28 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/11 14:44:26 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,6 @@
 
 // structure où on sait quand on est dans une single quote avec un booléen
 //<3<3<3
-
-void	init_quotes(t_quotes *quotes)
-{
-	quotes->open_d_quote = false;
-	quotes->open_s_quote = false;
-	quotes->odd_s_quote = false;
-	quotes->odd_d_quote = false;
-}
 
 char	first_quote(char *str)
 {
@@ -97,15 +89,3 @@ char	is_quote_closed(t_quotes *quotes, char *str, int end)
 	return (0);
 }
 
-// int	main(void)
-// {
-// 	t_quotes	*quotes;
-
-// 	quotes = malloc(sizeof(t_quotes));
-// 	if (!quotes)
-// 		return (errno);
-// 	init_quotes(quotes);
-// 	printf("%c\n", is_quote_closed(quotes, ""));
-// 	free(quotes);
-// 	return (0);
-// }

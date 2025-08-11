@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:32:32 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/05 17:22:26 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/11 14:36:35 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_char_space(char *line)
 	count = 0;
 	while (line[i])
 	{
-		if (ft_isspace(line[i]))
+		if (is_space(line[i]))
 			count++;
 		i++;
 	}

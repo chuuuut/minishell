@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   ft_printf_d_i.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 09:32:18 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:44:20 by chdoe            ###   ########.fr       */
+/*   Created: 2024/12/01 18:57:39 by chdoe             #+#    #+#             */
+/*   Updated: 2024/12/09 17:44:23 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+/*
+• %d Prints a decimal (base 10) number.
+• %i Prints an integer in base 10.
+*/
 
-int	is_prompt_space(char *line)
+#include "libftprintf.h"
+
+int	ft_printf_d_i(int n)
 {
-	int	i;
-	int	len;
+	int		nb;
+	char	*str;
 
-	i = 0;
-	len = 0;
-	while (line[i])
-	{
-		if (is_space(line[i]))
-			len++;
-		i++;
-	}
-	if (i == len)
-		return (1);
+	str = ft_itoa(n);
+	nb = write(1, str, ft_strlen(str));
+	free(str);
+	return (nb);
+}
+/*
+#include <stdio.h>
+int	main(void)
+{
+	int	n = -123456;
+	int	retval;
+
+	retval = ft_printf_d_i(n);
+	printf("%d\n", ft_printf_d_i(n));
 	return (0);
 }
-
-
+*/

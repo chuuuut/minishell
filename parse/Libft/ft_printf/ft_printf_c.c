@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   ft_printf_c.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 09:32:18 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:44:20 by chdoe            ###   ########.fr       */
+/*   Created: 2024/12/01 18:57:08 by chdoe             #+#    #+#             */
+/*   Updated: 2024/12/09 17:37:30 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+/*
+• %c Prints a single character.
+*/
 
-int	is_prompt_space(char *line)
+#include "libftprintf.h"
+
+int	ft_printf_c(int c)
 {
-	int	i;
-	int	len;
+	return (write(1, &c, 1));
+}
+/*
+#include <stdio.h>
+int	main(void)
+{
+	int	retval;
 
-	i = 0;
-	len = 0;
-	while (line[i])
-	{
-		if (is_space(line[i]))
-			len++;
-		i++;
-	}
-	if (i == len)
-		return (1);
+	retval = ft_printf_c('u');
+	printf("%d\n", retval);
 	return (0);
 }
-
-
+*/

@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:35:24 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/07 17:06:51 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/11 14:44:15 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	redirect_in(char *str)
 		if (str[i] == '<')
 		{	
 			i++;
-			while (ft_isspace(str[i]))
+			while (is_space(str[i]))
 				i++;
 			if (str[i] == '<' || str[i] == '>' || str[i] == '|' || !str[i])
 				return (-1);
@@ -97,12 +97,6 @@ int	redirect_in(char *str)
 		i++;
 	}
 	return (0);
-}
-
-void	init_inout(t_inout_ope *inout)
-{
-	inout->is_file = false;
-	inout->is_cmd = false;
 }
 
 /*
@@ -137,24 +131,7 @@ XXX    | < file.txt
 */
 
 
-/*
-int	main(void)
-{
-	t_quotes	*quotes;
-	// t_inout_ope	*inout;
 
-	quotes = malloc(sizeof(t_quotes));
-	if (!quotes)
-		return (errno);
-	// inout = malloc(sizeof(t_inout_ope));
-	// if (!inout)
-	// 	return (errno);
-	init_quotes(quotes);
-	// init_inout(inout);
-	// printf("%d\n", redirect_in("| < file.txt", inout, quotes));
-	printf("%d\n", redirect_in("< \"file.txt"));
-}
-*/
 
 
 

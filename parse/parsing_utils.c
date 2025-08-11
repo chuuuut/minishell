@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:32:09 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/29 18:02:53 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/11 14:44:24 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ int	ft_tablen(char **tab)
 	while (tab[i])
 		i++;
 	return (i);
+}
+
+int	is_space(char c)
+{
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
 }

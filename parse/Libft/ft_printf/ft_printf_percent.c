@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   ft_printf_percent.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: chdoe <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 09:32:18 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:44:20 by chdoe            ###   ########.fr       */
+/*   Created: 2024/12/01 18:58:47 by chdoe             #+#    #+#             */
+/*   Updated: 2024/12/01 18:58:48 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+/*
+• %% Prints a percent sign.
+*/
 
-int	is_prompt_space(char *line)
+#include "libftprintf.h"
+
+int	ft_printf_percent(void)
 {
-	int	i;
-	int	len;
+	return (write(1, "%", 1));
+}
+/*
+#include <stdio.h>
+int	main(void)
+{
+	int	retval;
 
-	i = 0;
-	len = 0;
-	while (line[i])
-	{
-		if (is_space(line[i]))
-			len++;
-		i++;
-	}
-	if (i == len)
-		return (1);
+	retval = ft_printf_percent();
+	printf("%d\n", retval);
 	return (0);
 }
-
-
+*/

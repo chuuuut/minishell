@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 15:58:51 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/30 17:25:37 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/11 14:44:25 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,6 @@ int	syntax_error(char *line, t_quotes *quotes)
 		// printf("Syntax error : open quote\n");
 		return (2);
 	}
-	return (0);
-}
-
-int	main(void)
-{
-	t_quotes	*quotes;
-	
-	quotes = malloc(sizeof(t_quotes));
-	if (!quotes)
-	return (errno);
-	init_quotes(quotes);
-	syntax_error("< \"file.txt", quotes);
-	free(quotes);
 	return (0);
 }
 
