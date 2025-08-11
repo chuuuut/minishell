@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:44:22 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/11 17:30:18 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int		check_empty_pipes(char *line);
 void	ft_free_tab(char **str);
 int		ft_tablen(char **tab);
 int		is_space(char c);
+int		is_bad_redirect(char c);
+
 //				OPEN QUOTES
 char	first_quote(char *str);
 int		quotes_status(char *str, t_quotes *quotes, char c);
@@ -61,7 +63,11 @@ char	is_quote_closed(t_quotes *quotes, char *str, int end);
 //				PARSING ERRORS
 int		syntax_error(char *line, t_quotes *quotes);
 //				REDIRECT
+//		faire une fonction protectrice au cas-où la str est vide
 int		redirect_in(char *str);
+int		redirect_out(char *str);
+int		redirect_app_in(char *str);
+int		redirect_app_out(char *str);
 //				EXPAND_QUOTES
 
 //				INIT_VAR

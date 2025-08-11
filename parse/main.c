@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:44:11 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/11 17:30:20 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@
 // }
 
 
-int	main(void)
-{
-	t_quotes	*quotes;
+// int	main(void)
+// {
+// 	t_quotes	*quotes;
 	
-	quotes = malloc(sizeof(t_quotes));
-	if (!quotes)
-	return (errno);
-	init_quotes(quotes);
-	syntax_error("< \"file.txt", quotes);
-	free(quotes);
-	return (0);
-}
+// 	quotes = malloc(sizeof(t_quotes));
+// 	if (!quotes)
+// 	return (errno);
+// 	init_quotes(quotes);
+// 	syntax_error("> \"file.txt", quotes);
+// 	free(quotes);
+// 	return (0);
+// }
 
 
 // int	main(void)
@@ -59,7 +59,7 @@ int	main(void)
 // }
 
 
-/*
+
 int	main(void)
 {
 	t_quotes	*quotes;
@@ -74,6 +74,6 @@ int	main(void)
 	init_quotes(quotes);
 	// init_inout(inout);
 	// printf("%d\n", redirect_in("| < file.txt", inout, quotes));
-	printf("%d\n", redirect_in("< \"file.txt"));
+	// printf("%d\n", redirect_in("< file.txt | | grep test"));
+	printf("%d\n", redirect_out("echo \"file name\" > \"my file.txt\""));
 }
-*/

@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:32:09 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:44:24 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/11 17:30:23 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ int	ft_tablen(char **tab)
 int	is_space(char c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
+}
+
+int	is_bad_redirect(char c)
+{
+	if (c == 0 || c == '<' || c == '>' || c == '|')
 		return (1);
 	return (0);
 }

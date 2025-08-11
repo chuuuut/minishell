@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:35:24 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:44:15 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/11 17:30:28 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,23 @@ int	redirect_in(char *str)
 			i++;
 			while (is_space(str[i]))
 				i++;
-			if (str[i] == '<' || str[i] == '>' || str[i] == '|' || !str[i])
+            if (is_bad_redirect(str[i]))
 				return (-1);
+            while (!is_space(str[i]) && !is_bad_redirect(str[i]))
+				i++;
+			while (is_space(str[i]))
+				i++;
+			if (str[i] == '>' || str[i] == '<' || str[i] == '|')
+			{
+				i++;
+				while (is_space(str[i]))
+					i++;
+                if (is_bad_redirect(str[i]))
+					return (-1);
+			}
 		}
-		i++;
+        else
+    		i++;
 	}
 	return (0);
 }
@@ -104,31 +117,137 @@ int	redirect_in(char *str)
 
 XXX    | < file.txt
         Pipe au début. Erreur potentielle : "syntax error near |"
+géré par le pipes.c
 
     < file.txt | | grep test
         Double pipe sans commande entre les deux.
+OK  MAIS géré par le pipes.c
 
     < file.txt >
         Redirection de sortie sans spécification de fichier.
-
-❌ Quotes ouvertes non fermées
-
-    < "file.txt
-        Quote double ouverte, jamais fermée.
-        ➤ Erreur : "unclosed double quote"
-
-    < 'file.txt
-        Même problème avec quote simple.
-        ➤ Erreur : "unclosed single quote"
-
-    < "file.txt | grep something
-        Tout est dans une quote non fermée.
-        ➤ Ne jamais exécuter : tout est en attente de fermeture de la quote.
-
-    echo "salut | wc < file.txt
-        Le < est littéral car il est dans une quote ouverte.
-        ➤ Ce n’est pas une redirection, mais une chaîne de caractères (sauf si quote fermée ensuite).
 */
+
+// int	redirect_out(char *str, t_inout_ope out)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (ft_strchr(str, '>') == NULL)
+// 		return (-1);
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '>')
+// 		{	
+// 			i++;
+// 			while (is_space(str[i]))
+// 				i++;
+// 			if (str[i] == '<' || str[i] == '>' || str[i] == '|' || !str[i])
+// 				return (-1);
+// 		}
+// 		i++;
+// 	}
+// }
+
+int	redirect_out(char *str)
+{
+	int	i;
+	
+	i = 0;
+	if (ft_strchr(str, '>') == NULL)
+		return (-1);
+	while (str[i])
+	{
+		if (str[i] == '>')
+		{	
+			i++;
+			while (is_space(str[i]))
+				i++;
+            if (is_bad_redirect(str[i]))
+				return (-1);
+            while (!is_space(str[i]) && !is_bad_redirect(str[i]))
+				i++;
+			while (is_space(str[i]))
+				i++;
+			if (str[i] == '>' || str[i] == '<' || str[i] == '|')
+			{
+				i++;
+				while (is_space(str[i]))
+					i++;
+                if (is_bad_redirect(str[i]))
+					return (-1);
+			}
+		}
+        else
+    		i++;
+	}
+	return (0);
+}
+
+// int	redirect_app_in(char *str)
+// {
+
+// }
+
+// int	redirect_app_out(char *str)
+// {
+
+// }
+
+// ########## ✅ Cas valides ##########
+
+//		A gerer dans une autre fonction avec double chevrons
+
+// >>file.txt                 # Redirection append sans espace. 
+// KO     ➤ Ajoute à file.txt (ou le crée).
+// >> file.txt                # Redirection append avec espace. 
+// KO     ➤ Ajoute à file.txt (ou le crée).
+
+
+// echo "file name" > "my file.txt" # Nom de fichier cible entre quotes. 
+//  OK    ➤ Crée/écrase "my file.txt".
+// >file.txt                  # Redirection vers fichier sans espace. 
+//  OK    ➤ Crée/écrase file.txt.
+// > file.txt                 # Redirection avec espace après le chevron. 
+//  OK    ➤ Crée/écrase file.txt.
+// echo salut > out.txt       # Commande avec redirection sortie. 
+//  OK    ➤ Écrit "salut\n" dans out.txt.
+// ls > out.txt               # Commande classique avec redirection. 
+//  OK    ➤ Écrit la liste dans out.txt.
+// echo salut | cat > out.txt # Pipe + redirection sortie. 
+//  OK    ➤ Résultat du pipe dans out.txt.
+// cat < in.txt > out.txt     # Entrée depuis in.txt, sortie vers out.txt. 
+//  OK    ➤ Copie in.txt dans out.txt.
+// echo "abc > def" > out.txt # '>' dans une chaîne quoted. 
+//  OK    ➤ Écrit "abc > def" dans out.txt.
+
+
+// ########## ❌ Cas invalides ##########
+
+// >                        # Redirection seule. 
+//  OK    ➤ Erreur : syntax error near unexpected token 'newline'.
+// >>                       # Double chevron seul. 
+//  OK    ➤ Erreur : syntax error near unexpected token 'newline'.
+// >   |                    # Pipe direct après redirection. 
+//  OK    ➤ Erreur : syntax error near unexpected token '|'.
+// >>  < file.txt           # Chevrons mélangés immédiatement. 
+//  OK    ➤ Erreur : syntax error near unexpected token '<'.
+// > > out.txt              # Deux '>' séparés par espace. 
+//  OK    ➤ Erreur : syntax error near unexpected token '>'.
+// > file.txt >             # Deuxième '>' sans fichier. 
+//  OK    ➤ Erreur : syntax error near unexpected token 'newline'.
+// > file.txt | | grep test # Double pipe avec trou. 
+//  OK    ➤ Erreur : syntax error near unexpected token '|'.
+// echo salut > | cat       # Pipe juste après redirection. 
+//  OK    ➤ Erreur : syntax error near unexpected token '|'.
+// > "file.txt              # Quote double non fermée. 
+//  OK    ➤ Erreur : unclosed double quote.
+// > 'file.txt              # Quote simple non fermée. 
+//  OK    ➤ Erreur : unclosed single quote.
+// > "file name | grep"     # Quote fermée donc OK (sinon erreur). 
+//  OK    ➤ Si fermée, fichier "file name | grep".
+// echo "salut > out.txt    # '>' littéral dans quote ouverte. 
+//  OK    ➤ Pas une redirection, mais chaîne incomplète.
+
 
 
 
@@ -141,18 +260,7 @@ XXX    | < file.txt
 // creera le fichier meme si la commande ne marche pas ou si pas de commande
 
 
-// int	redirect_out(char *str, t_inout_ope out)
-// {
-// 	int	i;
 
-// 	i = 0;
-// 	if (ft_strchr(str, '>') == NULL)
-// 		return (-1);
-// 	while (str[i])
-// 	{
-		
-// 	}
-// }
 
 
 // < file1 cmd1 | cmd2 > file2
