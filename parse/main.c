@@ -60,7 +60,7 @@
 
 
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_quotes	*quotes;
 	// t_inout_ope	*inout;
@@ -68,6 +68,7 @@ int	main(void)
 	quotes = malloc(sizeof(t_quotes));
 	if (!quotes)
 		return (errno);
+	(void)argc;
 	// inout = malloc(sizeof(t_inout_ope));
 	// if (!inout)
 	// 	return (errno);
@@ -75,5 +76,5 @@ int	main(void)
 	// init_inout(inout);
 	// printf("%d\n", redirect_in("| < file.txt", inout, quotes));
 	// printf("%d\n", redirect_in("< file.txt | | grep test"));
-	printf("%d\n", redirect_out("echo \"file name\" > \"my file.txt\""));
+	printf("%d\n", redirect_out(argv[1]));
 }

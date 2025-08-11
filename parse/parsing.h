@@ -13,6 +13,8 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+# include "./Libft/libft.h"
+
 typedef struct	s_cmd
 {
 	char			*cmd;

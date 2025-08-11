@@ -82,8 +82,6 @@ int	redirect_in(char *str)
 	int	i;
 	
 	i = 0;
-	if (ft_strchr(str, '<') == NULL)
-		return (-1);
 	while (str[i])
 	{
 		if (str[i] == '<')
@@ -93,18 +91,6 @@ int	redirect_in(char *str)
 				i++;
             if (is_bad_redirect(str[i]))
 				return (-1);
-            while (!is_space(str[i]) && !is_bad_redirect(str[i]))
-				i++;
-			while (is_space(str[i]))
-				i++;
-			if (str[i] == '>' || str[i] == '<' || str[i] == '|')
-			{
-				i++;
-				while (is_space(str[i]))
-					i++;
-                if (is_bad_redirect(str[i]))
-					return (-1);
-			}
 		}
         else
     		i++;
@@ -127,34 +113,11 @@ OK  MAIS géré par le pipes.c
         Redirection de sortie sans spécification de fichier.
 */
 
-// int	redirect_out(char *str, t_inout_ope out)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (ft_strchr(str, '>') == NULL)
-// 		return (-1);
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '>')
-// 		{	
-// 			i++;
-// 			while (is_space(str[i]))
-// 				i++;
-// 			if (str[i] == '<' || str[i] == '>' || str[i] == '|' || !str[i])
-// 				return (-1);
-// 		}
-// 		i++;
-// 	}
-// }
-
 int	redirect_out(char *str)
 {
 	int	i;
 	
 	i = 0;
-	if (ft_strchr(str, '>') == NULL)
-		return (-1);
 	while (str[i])
 	{
 		if (str[i] == '>')
@@ -164,18 +127,6 @@ int	redirect_out(char *str)
 				i++;
             if (is_bad_redirect(str[i]))
 				return (-1);
-            while (!is_space(str[i]) && !is_bad_redirect(str[i]))
-				i++;
-			while (is_space(str[i]))
-				i++;
-			if (str[i] == '>' || str[i] == '<' || str[i] == '|')
-			{
-				i++;
-				while (is_space(str[i]))
-					i++;
-                if (is_bad_redirect(str[i]))
-					return (-1);
-			}
 		}
         else
     		i++;
