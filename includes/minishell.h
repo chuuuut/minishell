@@ -12,7 +12,7 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include "../libft/includes/libft.h"
+// # include "../libft/includes/libft.h"
 # include <unistd.h>
 # include <errno.h>
 # include <stdlib.h>
