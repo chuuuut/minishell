@@ -77,15 +77,29 @@
 
 
 // int	redirect_in(char *str, t_inout_ope *in, t_quotes *quotes)
-int	redirect_in(char *str)
+int	triple_inout(char *str, t_quotes *quotes)
+{
+	char	*check;
+
+	check = ft_strnstr(str, "<<<", ft_strlen(str));
+	if (!check)
+		return (1);
+	if (is_quote_closed(quotes, str, ft_strlen(str) - ft_strlen(check)))	//si dans une quote
+		return (1);
+	return (0);
+}
+
+int	redirect_inout(char *str, t_quotes *quotes)
 {
 	int	i;
 	
 	i = 0;
+	if (!triple_inout(str, quotes))
+		return (-1);
 	while (str[i])
 	{
-		if (str[i] == '<')
-		{	
+		if (str[i] == '<' || str[i] == '>')
+		{
 			i++;
 			while (is_space(str[i]))
 				i++;
@@ -113,36 +127,16 @@ OK  MAIS géré par le pipes.c
         Redirection de sortie sans spécification de fichier.
 */
 
-int	redirect_out(char *str)
+
+int	redirect_app_in(char *str)
 {
-	int	i;
-	
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '>')
-		{	
-			i++;
-			while (is_space(str[i]))
-				i++;
-            if (is_bad_redirect(str[i]))
-				return (-1);
-		}
-        else
-    		i++;
-	}
-	return (0);
+
 }
 
-// int	redirect_app_in(char *str)
-// {
+int	redirect_app_out(char *str)
+{
 
-// }
-
-// int	redirect_app_out(char *str)
-// {
-
-// }
+}
 
 // ########## ✅ Cas valides ##########
 
@@ -170,6 +164,8 @@ int	redirect_out(char *str)
 //  OK    ➤ Copie in.txt dans out.txt.
 // echo "abc > def" > out.txt # '>' dans une chaîne quoted. 
 //  OK    ➤ Écrit "abc > def" dans out.txt.
+// > "file name | grep"     # Quote fermée donc OK (sinon erreur). 
+//  OK    ➤ Si fermée, fichier "file name | grep".
 
 
 // ########## ❌ Cas invalides ##########
@@ -194,8 +190,6 @@ int	redirect_out(char *str)
 //  OK    ➤ Erreur : unclosed double quote.
 // > 'file.txt              # Quote simple non fermée. 
 //  OK    ➤ Erreur : unclosed single quote.
-// > "file name | grep"     # Quote fermée donc OK (sinon erreur). 
-//  OK    ➤ Si fermée, fichier "file name | grep".
 // echo "salut > out.txt    # '>' littéral dans quote ouverte. 
 //  OK    ➤ Pas une redirection, mais chaîne incomplète.
 

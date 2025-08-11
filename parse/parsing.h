@@ -66,10 +66,10 @@ char	is_quote_closed(t_quotes *quotes, char *str, int end);
 int		syntax_error(char *line, t_quotes *quotes);
 //				REDIRECT
 //		faire une fonction protectrice au cas-où la str est vide
-int		redirect_in(char *str);
-int		redirect_out(char *str);
-int		redirect_app_in(char *str);
-int		redirect_app_out(char *str);
+int		triple_inout(char *str, t_quotes *quotes);
+int		redirect_inout(char *str, t_quotes *quotes);
+// int		redirect_app_in(char *str);
+// int		redirect_app_out(char *str);
 //				EXPAND_QUOTES
 
 //				INIT_VAR

@@ -74,7 +74,5 @@ int	main(int argc, char **argv)
 	// 	return (errno);
 	init_quotes(quotes);
 	// init_inout(inout);
-	// printf("%d\n", redirect_in("| < file.txt", inout, quotes));
-	// printf("%d\n", redirect_in("< file.txt | | grep test"));
-	printf("%d\n", redirect_out(argv[1]));
+	printf("%d\n", redirect_inout(argv[1], quotes));
 }
