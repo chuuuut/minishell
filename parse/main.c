@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/12 11:49:43 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 14:50:36 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 // 	if (!quotes)
 // 	return (errno);
 // 	init_quotes(quotes);
-// 	syntax_error("> \"file.txt", quotes);
+// 	syntax_error(">> \"", quotes);
 // 	free(quotes);
 // 	return (0);
 // }
@@ -75,4 +75,6 @@ int	main(int argc, char **argv)
 	init_quotes(quotes);
 	// init_inout(inout);
 	printf("%d\n", append_inout(argv[1], quotes));
+	free(quotes);
+	return (0);
 }

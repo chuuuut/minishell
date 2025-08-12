@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:32:32 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:36:35 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 14:50:33 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ int	check_empty_pipes(char *line)
 			return (0);
 		i++;
 	}
+	ft_free_tab(pipes_tab);
 	return (1);
 }

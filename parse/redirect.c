@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:35:24 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/12 11:49:47 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 14:37:46 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,23 @@
 
 
 // int	redirect_in(char *str, t_inout_ope *in, t_quotes *quotes)
-int	triple_inout(char *str, t_quotes *quotes)
+int	triple_in(char *str, t_quotes *quotes)
 {
 	char	*check;
 
 	check = ft_strnstr(str, "<<<", ft_strlen(str));
+	if (!check)
+		return (1);
+	if (is_quote_closed(quotes, str, ft_strlen(str) - ft_strlen(check)))
+		return (1);
+	return (0);
+}
+
+int	triple_out(char *str, t_quotes *quotes)
+{
+	char	*check;
+
+	check = ft_strnstr(str, ">>>", ft_strlen(str));
 	if (!check)
 		return (1);
 	if (is_quote_closed(quotes, str, ft_strlen(str) - ft_strlen(check)))
@@ -94,7 +106,9 @@ int	redirect_inout(char *str, t_quotes *quotes)
 	int	i;
 	
 	i = 0;
-	if (!triple_inout(str, quotes))
+	if (!triple_in(str, quotes))
+		return (-1);
+	if (!triple_out(str, quotes))
 		return (-1);
 	while (str[i] && str[i])
 	{
@@ -103,7 +117,7 @@ int	redirect_inout(char *str, t_quotes *quotes)
 			i++;
 			while (str[i] && is_space(str[i]))
 				i++;
-            if (str[i] && is_bad_redirect(str[i]))
+            if (is_bad_redirect(str[i]))
 				return (-1);
 		}
         else
@@ -111,6 +125,56 @@ int	redirect_inout(char *str, t_quotes *quotes)
 	}
 	return (0);
 }
+
+int	append_inout(char *str, t_quotes *quotes)
+{
+	int	i;
+	
+	i = 0;
+	if (!triple_in(str, quotes))
+		return (-1);
+	if (!triple_out(str, quotes))
+		return (-1);
+	while (str[i])
+	{
+		if (str[i + 1] && \
+		    !is_quote_closed(quotes, str, i) && \
+		    ((str[i] == '<' && str[i + 1] == '<') || \
+		     (str[i] == '>' && str[i + 1] == '>')))
+		{
+			i += 2;
+				while (str[i] && is_space(str[i]))
+					i++;
+				if (is_bad_redirect(str[i]))
+					return (-1);
+		}
+        else
+    		i++;
+	}
+	return (0);
+}
+
+// # valides
+// echo "OK: append" >>file.txt
+// echo "OK: append with space" >> file.txt
+// echo "heredoc" << EOF
+// abc
+// EOF
+
+// # invalides (doivent être rejetés par ton parser)
+// >>                     # doit échouer
+// >>   |                 # doit échouer
+// >> < file.txt          # doit échouer
+// >> file.txt >>         # doit échouer
+// 	KO mais gere par open "'	>> "unclosed           # doit échouer (unclosed double quote)
+// 	KO mais gere par open "'	>> 'unclosed           # doit échouer (unclosed single quote)
+// >>> file.txt           # doit échouer (triple chevron)
+// <<                    # doit échouer (heredoc sans limiteur)
+// cat << | grep          # doit échouer (token interdit après <<)
+
+
+
+
 
 /*
 ❌ Cas invalides (à détecter comme erreurs syntaxiques)
@@ -126,36 +190,6 @@ OK  MAIS géré par le pipes.c
     < file.txt >
         Redirection de sortie sans spécification de fichier.
 */
-
-
-
-
-int	append_inout(char *str, t_quotes *quotes)
-{
-	int	i;
-	
-	i = 0;
-	if (!triple_inout(str, quotes))
-		return (-1);
-	while (str[i])
-	{
-		if (str[i + 1] && \
-		    is_quote_closed(quotes, str, i) && \
-		    ((str[i] == '<' && str[i + 1] == '<') || \
-		     (str[i] == '>' && str[i + 1] == '>')))
-		{
-			i += 2;
-				while (str[i] && is_space(str[i]))
-					i++;
-				if (str[i] && is_bad_redirect(str[i]))
-					return (-1);
-		}
-        else
-    		i++;
-	}
-	return (0);
-}
-
 
 
 // ########## ✅ Cas valides ##########
@@ -213,19 +247,3 @@ int	append_inout(char *str, t_quotes *quotes)
 // echo "salut > out.txt    # '>' littéral dans quote ouverte. 
 //  OK    ➤ Pas une redirection, mais chaîne incomplète.
 
-
-
-
-
-
-
-// fonction qui checke si il y a qqch avant un pipe ou avant la fin apres un chevron
-// cmd > file = > file cmd
-// commande (valide ou non) pas necessaire
-// creera le fichier meme si la commande ne marche pas ou si pas de commande
-
-
-
-
-
-// < file1 cmd1 | cmd2 > file2

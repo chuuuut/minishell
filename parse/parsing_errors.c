@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 15:58:51 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 14:44:25 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 14:42:10 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	syntax_error(char *line, t_quotes *quotes)
 {
+	if (!line)
+		return (1);
 	if (check_empty_pipes(line) == 0)
 	{
 		ft_putstr_fd("Syntax error : empty pipe\n", 2);
