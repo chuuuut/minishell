@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 17:30:20 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 11:49:43 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,5 @@ int	main(int argc, char **argv)
 	// 	return (errno);
 	init_quotes(quotes);
 	// init_inout(inout);
-	printf("%d\n", redirect_inout(argv[1], quotes));
+	printf("%d\n", append_inout(argv[1], quotes));
 }

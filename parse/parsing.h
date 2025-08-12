@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 17:30:18 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 11:49:45 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		syntax_error(char *line, t_quotes *quotes);
 //		faire une fonction protectrice au cas-où la str est vide
 int		triple_inout(char *str, t_quotes *quotes);
 int		redirect_inout(char *str, t_quotes *quotes);
+int		append_inout(char *str, t_quotes *quotes);
 // int		redirect_app_in(char *str);
 // int		redirect_app_out(char *str);
 //				EXPAND_QUOTES

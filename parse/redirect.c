@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:35:24 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/11 17:30:28 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 11:49:47 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	triple_inout(char *str, t_quotes *quotes)
 	check = ft_strnstr(str, "<<<", ft_strlen(str));
 	if (!check)
 		return (1);
-	if (is_quote_closed(quotes, str, ft_strlen(str) - ft_strlen(check)))	//si dans une quote
+	if (is_quote_closed(quotes, str, ft_strlen(str) - ft_strlen(check)))
 		return (1);
 	return (0);
 }
@@ -96,14 +96,14 @@ int	redirect_inout(char *str, t_quotes *quotes)
 	i = 0;
 	if (!triple_inout(str, quotes))
 		return (-1);
-	while (str[i])
+	while (str[i] && str[i])
 	{
-		if (str[i] == '<' || str[i] == '>')
+		if (str[i] &&  (str[i] == '<' || str[i] == '>'))
 		{
 			i++;
-			while (is_space(str[i]))
+			while (str[i] && is_space(str[i]))
 				i++;
-            if (is_bad_redirect(str[i]))
+            if (str[i] && is_bad_redirect(str[i]))
 				return (-1);
 		}
         else
@@ -128,15 +128,35 @@ OK  MAIS géré par le pipes.c
 */
 
 
-int	redirect_app_in(char *str)
-{
 
+
+int	append_inout(char *str, t_quotes *quotes)
+{
+	int	i;
+	
+	i = 0;
+	if (!triple_inout(str, quotes))
+		return (-1);
+	while (str[i])
+	{
+		if (str[i + 1] && \
+		    is_quote_closed(quotes, str, i) && \
+		    ((str[i] == '<' && str[i + 1] == '<') || \
+		     (str[i] == '>' && str[i + 1] == '>')))
+		{
+			i += 2;
+				while (str[i] && is_space(str[i]))
+					i++;
+				if (str[i] && is_bad_redirect(str[i]))
+					return (-1);
+		}
+        else
+    		i++;
+	}
+	return (0);
 }
 
-int	redirect_app_out(char *str)
-{
 
-}
 
 // ########## ✅ Cas valides ##########
 
