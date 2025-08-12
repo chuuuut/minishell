@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/12 14:50:36 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 15:12:02 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,20 @@
 // }
 
 
-// int	main(void)
-// {
-// 	t_quotes	*quotes;
+int	main(int argc, char **argv)
+{
+	(void)	argc;
+	t_quotes	*quotes;
 	
-// 	quotes = malloc(sizeof(t_quotes));
-// 	if (!quotes)
-// 	return (errno);
-// 	init_quotes(quotes);
-// 	syntax_error(">> \"", quotes);
-// 	free(quotes);
-// 	return (0);
-// }
+	quotes = malloc(sizeof(t_quotes));
+	if (!quotes)
+	return (errno);
+	init_quotes(quotes);
+	syntax_error(argv[1], quotes);
+	// syntax_error(">> \"", quotes);
+	free(quotes);
+	return (0);
+}
 
 
 // int	main(void)
@@ -60,21 +62,21 @@
 
 
 
-int	main(int argc, char **argv)
-{
-	t_quotes	*quotes;
-	// t_inout_ope	*inout;
+// int	main(int argc, char **argv)
+// {
+// 	t_quotes	*quotes;
+// 	// t_inout_ope	*inout;
 
-	quotes = malloc(sizeof(t_quotes));
-	if (!quotes)
-		return (errno);
-	(void)argc;
-	// inout = malloc(sizeof(t_inout_ope));
-	// if (!inout)
-	// 	return (errno);
-	init_quotes(quotes);
-	// init_inout(inout);
-	printf("%d\n", append_inout(argv[1], quotes));
-	free(quotes);
-	return (0);
-}
+// 	quotes = malloc(sizeof(t_quotes));
+// 	if (!quotes)
+// 		return (errno);
+// 	(void)argc;
+// 	// inout = malloc(sizeof(t_inout_ope));
+// 	// if (!inout)
+// 	// 	return (errno);
+// 	init_quotes(quotes);
+// 	// init_inout(inout);
+// 	printf("%d\n", append_inout(argv[1], quotes));
+// 	free(quotes);
+// 	return (0);
+// }

@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:31:57 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/12 13:45:40 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 15:11:55 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@
 // structure où on sait quand on est dans une single quote avec un booléen
 //<3<3<3
 
-char	first_quote(char *str)
+char	first_quote(char *line)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (line[i])
 	{
-		if (str[i] == '\"' || str[i] == '\'')
+		if (line[i] == '\"' || line[i] == '\'')
 		{
-			if (str[i] == '\'')
+			if (line[i] == '\'')
 				return ('\'');
-			else if (str[i] == '\"')
+			else if (line[i] == '\"')
 				return ('\"');
 		}
 		i++;
@@ -47,7 +47,7 @@ char	first_quote(char *str)
 	return (0);
 }
 
-int	quotes_status(char *str, t_quotes *quotes, char c)
+int	quotes_status(char *line, t_quotes *quotes, char c)
 {
 	int	i;
 
@@ -56,9 +56,9 @@ int	quotes_status(char *str, t_quotes *quotes, char c)
 		quotes->open_d_quote = true;
 	else
 		quotes->open_s_quote = true;
-	while (str[i] != c && str[i])
+	while (line[i] != c && line[i])
 		i++;
-	if (str[i] == c && str[i])
+	if (line[i] == c && line[i])
 	{
 		if (c == '\"')
 			quotes->open_d_quote = false;
@@ -69,17 +69,17 @@ int	quotes_status(char *str, t_quotes *quotes, char c)
 	return (i);
 }
 
-char	is_quote_closed(t_quotes *quotes, char *str, int end)
+char	is_quote_closed(t_quotes *quotes, char *line, int end)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] && i < end)
+	while (line[i] && i < end)
 	{
-		if (first_quote(&str[i]) == '\"' && str[i] == '\"')
-			i += quotes_status(&str[i], quotes, '\"');
-		else if (first_quote(&str[i]) == '\'' && str[i] == '\'')
-			i += quotes_status(&str[i], quotes, '\'');
+		if (first_quote(&line[i]) == '\"' && line[i] == '\"')
+			i += quotes_status(&line[i], quotes, '\"');
+		else if (first_quote(&line[i]) == '\'' && line[i] == '\'')
+			i += quotes_status(&line[i], quotes, '\'');
 		i++;
 	}
 	if (quotes->open_d_quote == true)

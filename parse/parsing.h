@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/12 14:39:50 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 15:11:58 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,19 @@ int		is_space(char c);
 int		is_bad_redirect(char c);
 
 //				OPEN QUOTES
-char	first_quote(char *str);
-int		quotes_status(char *str, t_quotes *quotes, char c);
-char	is_quote_closed(t_quotes *quotes, char *str, int end);
+char	first_quote(char *line);
+int		quotes_status(char *line, t_quotes *quotes, char c);
+char	is_quote_closed(t_quotes *quotes, char *line, int end);
 //				PARSING ERRORS
 int		syntax_error(char *line, t_quotes *quotes);
 //				REDIRECT
 //		faire une fonction protectrice au cas-où la str est vide
-int		triple_in(char *str, t_quotes *quotes);
-int		triple_out(char *str, t_quotes *quotes);
-int		redirect_inout(char *str, t_quotes *quotes);
-int		append_inout(char *str, t_quotes *quotes);
+int		triple_in(char *line, t_quotes *quotes);
+int		triple_out(char *line, t_quotes *quotes);
+int		redirect_inout(char *line, t_quotes *quotes);
+int		append_inout(char *line, t_quotes *quotes);
 //				EXPAND_QUOTES
-
+int		expand_quotes(char *line, t_quotes *quotes);
 //				INIT_VAR
 void	init_inout(t_inout_ope *inout);
 void	init_quotes(t_quotes *quotes);
