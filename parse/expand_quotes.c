@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/12 17:21:26 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/13 18:33:49 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,146 @@
 //	- quand $ suivi de texte	->	EXPAND
 //	- quand on est dans ''		->	pas d'expand
 //	- quand $ précédé de '\\'	->	pas d'expand
-int	expand_quotes(char *line, t_quotes *quotes)
+
+//		renvoyer quand expand ou quand ignorer
+
+
+// int	expand_quotes(char *line, t_quotes *quotes, char **env)
+// {
+// 	int	i;
+	
+// 	i = 0;
+// 	while (line[i])
+// 	{
+// 		if (line[i] && line[i] == '$')
+// 		{
+// 			i++;
+// 			if (line[i - 1] == '\\')
+// 				return (1);			//pas d'expand
+// 			if (is_quote_closed(quotes, line, i) == '\'')
+// 				return (1);			//pas d'expand
+//             if (is_bad_redirect(line[i]))
+// 				return (-1);		
+// 			while (line[i] && is_space(line[i]))
+// 				i++;
+// 		}
+//         else
+//     		i++;
+// 	}
+// 	return (0);
+// }
+
+
+
+int	expand_quotes(char *line, t_quotes *quotes, char **env)
 {
-	int	i;
+	int		i;
+	char	*exp;
 	
 	i = 0;
+	if (!ft_strchr(line, '$'))
+		return (-1);
 	while (line[i])
 	{
-		if (line[i] && line[i] == '$')
-		{
+		while (line[i] && !ft_strchr(&line[i], '$'))
 			i++;
-			if (line[i - 1] == '\\')
-				return (1);
-			if (is_quote_closed(quotes, line, i) == '\'')
-				return (1);
-            if (is_bad_redirect(line[i]))
-				return (-1);
-			while (line[i] && is_space(line[i]))
-				i++;
+		while (!is_space(line[i]) && line[i] != '$' && )
+			exp = ft_substr();
+			if (!exp)
+				return (-2);
+		while (line[i] && env[i])
+		{
+			if (ft_strnstr(line[i], env[i]))
 		}
-        else
-    		i++;
 	}
 	return (0);
 }
+
+
+// ######################################
+// # ✅ 1. CAS ENTIÈREMENT VALIDES
+// ######################################
+
+// echo salut                          # Commande simple
+// echo "salut monde"                  # Double quotes
+// echo 'salut monde'                  # Single quotes
+// echo "$USER"                        # Expansion valide
+// echo "Bonjour $USER !"              # Expansion dans double quotes
+// echo '$USER'                        # Pas d'expansion dans single quotes
+// echo texte$USERfin                   # Expansion collée à du texte
+// echo "txt$USER"fin                   # Expansion dans quotes + texte hors quotes
+// echo ${USER}                         # Expansion avec accolades
+// ls -l > file.txt                     # Redirection out
+// cat < file.txt                       # Redirection in
+// echo "salut" > file.txt              # Quote + redirection
+// cat <<EOF                            # Heredoc valide
+// fin de texte
+// EOF
+// ls -l >> log.txt                     # Append valide
+// cat <<EOF | grep "txt"               # Heredoc + pipe
+// test
+// EOF
+// echo "$INEXISTANT"                   # Expansion vide
+// echo ${INEXISTANT:-default}          # Valeur par défaut (bash extension)
+
+// ######################################
+// # ❌ 2. CAS ENTIÈREMENT INVALIDES
+// ######################################
+
+// | ls                                 # Pipe en début
+// ls || ls                             # Double pipe (non géré dans minishell simple)
+// <                                    # Redirection in sans fichier
+// >                                    # Redirection out sans fichier
+// >>                                   # Append sans fichier
+// <<                                   # Heredoc sans délimiteur
+// ls < >                               # Redirection incohérente
+// < file.txt >                         # Out sans fichier après
+// echo "salut                          # Double quote non fermée
+// echo 'salut                          # Single quote non fermée
+// echo ${USER                          # Accolade non fermée
+// cat <<EOF                            # Heredoc non terminé
+// test
+
+// ls > $INEXISTANT                     # Fichier vide après expansion
+// cat < $INEXISTANT                    # Idem
+// >> $INEXISTANT/                      # Répertoire inexistant après expansion
+// < $INEXISTANT >                      # In + Out sur fichier vide
+
+// ######################################
+// # ⚠️ 3. CAS MIXTES (partiellement OK)
+// ######################################
+
+// echo salut | grep sal >> log.txt     # Commande + pipe + append valide
+// echo "ok" | grep "o" > file.txt      # Expansion implicite + redirection valide
+// echo "Hello $USER" | grep "$INEXISTANT"  # Expansion vide mais commande fonctionne
+// cat < file.txt | grep "txt"          # In valide + pipe valide
+// echo "salut" > file.txt >> log2.txt  # Double redirection out → dernière gagne
+// ls -l > $USER.txt                    # Expansion dans nom fichier
+// ls -l > "$USER.txt"                  # Expansion dans quotes
+// echo $USER $INEXISTANT               # Expansion mixte : valide + vide
+// echo "$USER" "$INEXISTANT"           # Expansion vide dans quotes
+// echo 'test"ok'                       # Quotes mélangées mais fermées
+// echo "test'ok"                       # Idem
+// cat <<EOF | grep "ok"                 # Heredoc + pipe valide
+// coucou
+// EOF
+// cat <<EOF | grep "$INEXISTANT"        # Heredoc + expansion vide dans pipe
+// vide
+// EOF
+
+
+
+
+
+
+
+// chercher le $, checker s'il est dans une quote
+// checker dans quel quote il est pour savoir si expand
+// 	- si '', pas d'expand
+//	- si "", expand
+//	- si \$, juste du texte donc pas d'expand
+
+
 
 
 // # ✅ Cas valides (expansion autorisée)

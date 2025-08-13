@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/12 17:21:28 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/13 15:24:16 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,18 @@
 // }
 
 
-int	main(int argc, char **argv)
-{
-	(void)	argc;
-	t_quotes	*quotes;
-	
-	quotes = malloc(sizeof(t_quotes));
-	if (!quotes)
-	return (errno);
-	init_quotes(quotes);
-	syntax_error(argv[1], quotes);
-	// syntax_error(">> \"", quotes);
-	free(quotes);
-	return (0);
-}
-
-
-// int	main(void)
+// int	main(int argc, char **argv)
 // {
-// 	char	*line;
-
-// 	get_signal();
-// 	while((line = readline("> ")) != NULL)
-// 	{
-// 		if (is_prompt_space(line))
-// 			continue ;
-// 		printf("result : %s\n", line);
-// 		printf("%d\n", check_empty_pipes(line));
-// 		add_history(line);
-// 		free(line);
-// 	}
-// 	rl_clear_history();
+// 	(void)	argc;
+// 	t_quotes	*quotes;
+	
+// 	quotes = malloc(sizeof(t_quotes));
+// 	if (!quotes)
+// 	return (errno);
+// 	init_quotes(quotes);
+// 	syntax_error(argv[1], quotes);
+// 	// syntax_error(">> \"", quotes);
+// 	free(quotes);
 // 	return (0);
 // }
 
@@ -80,3 +61,18 @@ int	main(int argc, char **argv)
 // 	free(quotes);
 // 	return (0);
 // }
+
+
+
+int	main(int argc, char **argv, char **env)
+{
+	(void)	argc;
+	t_quotes	*quotes;
+
+	quotes = malloc(sizeof(t_quotes));
+	if (!quotes)
+		return (errno);
+	printf("%d\n", expand_quotes(argv[1], quotes, env));
+	free(quotes);
+	return (0);
+}
