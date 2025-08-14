@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/14 11:37:14 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/14 12:38:10 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 	}
 	return (0);
 }
+// il me faut une fonction qui prend une str et qui peut inserer un mot dedans
+
 
 
 // ######################################
@@ -102,7 +104,7 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 // echo '$USER'                        # Pas d'expansion dans single quotes
 // echo texte$USERfin                   # Expansion collée à du texte
 // echo "txt$USER"fin                   # Expansion dans quotes + texte hors quotes
-// echo ${USER}                         # Expansion avec accolades
+//	NPG		echo ${USER}                         # Expansion avec accolades
 // ls -l > file.txt                     # Redirection out
 // cat < file.txt                       # Redirection in
 // echo "salut" > file.txt              # Quote + redirection
