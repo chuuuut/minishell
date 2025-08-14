@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/13 18:33:49 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/14 11:37:14 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,41 @@
 
 
 
-int	expand_quotes(char *line, t_quotes *quotes, char **env)
+char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 {
-	int		i;
+	size_t		i;
+	int		j;
+	int		start;
 	char	*exp;
 	
 	i = 0;
+	j = 0;
 	if (!ft_strchr(line, '$'))
-		return (-1);
-	while (line[i])
+		return (NULL);
+	// while (line[i])
+	while (i < ft_strlen(line))
 	{
-		while (line[i] && !ft_strchr(&line[i], '$'))
+		while (line[i] && line[i] != '$')
 			i++;
-		while (!is_space(line[i]) && line[i] != '$' && )
-			exp = ft_substr();
-			if (!exp)
-				return (-2);
-		while (line[i] && env[i])
+		i++;
+		start = i;	
+		while (!is_space(line[i]) && line[i] != '$' && !is_bad_redirect(line[i]))
+			i++;
+		while (is_quote_closed(quotes, line, i) == '\'')
+			i++;
+		if (!(is_quote_closed(quotes, line, i) == '\''))
 		{
-			if (ft_strnstr(line[i], env[i]))
+			exp = ft_strjoin(ft_substr(line, start, i - start - 1), "=");
+			if (!exp)
+				return (NULL);
+			while (env[j])
+			{
+				if (ft_strnstr(env[j], exp, ft_strlen(exp)))
+					return (exp);
+				j++;
+			}
 		}
+		i++;
 	}
 	return (0);
 }

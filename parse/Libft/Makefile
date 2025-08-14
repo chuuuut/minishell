@@ -5,7 +5,7 @@ NAME = libft.a
 CC = cc
 
 #compilation flags
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 #sources of prog
 SRCS = ft_atoi.c ft_isdigit.c ft_memmove.c ft_split.c ft_strlcpy.c ft_strtrim.c \
