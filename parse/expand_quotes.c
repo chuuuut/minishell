@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/14 12:38:10 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/14 16:21:31 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,54 @@
 // 	return (0);
 // }
 
+size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
+{
+	size_t	i;
+	size_t	len_exp;
 
+	i = 0;
+	len_exp = ft_strlen(line);
+	if (!ft_strchr(line, '$'))
+		return (0);
+	while (line[i])
+	{
+		while (line[i] && line[i] != '$')
+			i++;
+		while (is_quote_closed(quotes, line, i) == '\'')
+			i++;
+		if (!(is_quote_closed(quotes, line, i) == '\''))
+		{
+
+		}
+	}
+}
+size_t	is_end_expand(char c)
+{
+	size_t	i;
+	static char	set[23] = "\"$'[]%=/0123456789><\\|\0";
+
+	i = 0;
+	while (set[i])
+	{
+		if (c == set[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+// " "$'[]%=/0123456789><"
 
 char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 {
 	size_t		i;
-	int		j;
-	int		start;
+	size_t		j;
+	size_t		start;
 	char	*exp;
 	
 	i = 0;
-	j = 0;
 	if (!ft_strchr(line, '$'))
 		return (NULL);
-	// while (line[i])
-	while (i < ft_strlen(line))
+	while (line[i])
 	{
 		while (line[i] && line[i] != '$')
 			i++;
@@ -77,7 +110,8 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 			exp = ft_strjoin(ft_substr(line, start, i - start - 1), "=");
 			if (!exp)
 				return (NULL);
-			while (env[j])
+			j = 0;
+ 			while (env[j])
 			{
 				if (ft_strnstr(env[j], exp, ft_strlen(exp)))
 					return (exp);
@@ -89,6 +123,7 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 	return (0);
 }
 // il me faut une fonction qui prend une str et qui peut inserer un mot dedans
+// retirer la len de exp et rajouter la len de env[j]
 
 
 
