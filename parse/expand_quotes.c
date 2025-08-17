@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/14 16:21:31 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/17 16:39:09 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 // 	return (0);
 // }
 
+
 size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 {
 	size_t	i;
@@ -69,21 +70,18 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 		}
 	}
 }
+
+
+
 size_t	is_end_expand(char c)
 {
-	size_t	i;
-	static char	set[23] = "\"$'[]%=/0123456789><\\|\0";
-
-	i = 0;
-	while (set[i])
-	{
-		if (c == set[i])
-			return (1);
-		i++;
-	}
-	return (0);
+	if (ft_isalnum(c) || c == '_')
+		return (0);
+	return (1);
 }
 // " "$'[]%=/0123456789><"
+
+
 
 char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 {
