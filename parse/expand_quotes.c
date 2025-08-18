@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/17 16:39:09 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/18 16:10:43 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,13 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 {
 	size_t	i;
 	size_t	len_exp;
+	char	*exp;
+	size_t		start;
+	size_t		j;
+	size_t		is_expand;
 
 	i = 0;
+	is_expand = 0;
 	len_exp = ft_strlen(line);
 	if (!ft_strchr(line, '$'))
 		return (0);
@@ -62,13 +67,32 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 	{
 		while (line[i] && line[i] != '$')
 			i++;
+		i++;
+		start = i;	
 		while (is_quote_closed(quotes, line, i) == '\'')
 			i++;
 		if (!(is_quote_closed(quotes, line, i) == '\''))
 		{
-
+			exp = ft_strjoin(ft_substr(line, start, i - start - 1), "=");
+			if (!exp)
+				return (-1);
+			j = 0;
+ 			while (env[j])
+			{
+				if (ft_strnstr(env[j], exp, ft_strlen(exp)))
+				{
+					is_expand++;
+					len_exp = len_exp + ft_strlen(exp) - (i - start);
+					break ;
+				}
+				j++;
+			}
 		}
+		i++;
 	}
+	if (is_expand)
+		return (len_exp);
+	return (0);
 }
 
 
@@ -76,8 +100,8 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 size_t	is_end_expand(char c)
 {
 	if (ft_isalnum(c) || c == '_')
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 // " "$'[]%=/0123456789><"
 
