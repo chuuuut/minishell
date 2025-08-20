@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/19 17:19:28 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/20 15:19:16 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 	size_t		start;
 	size_t		j;
 	size_t		is_expand;
+	size_t		size;
 
 	i = 0;
 	is_expand = 0;
@@ -73,8 +74,11 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 			i++;
 		if (!(is_quote_closed(quotes, line, i) == '\''))
 		{
-			printf("start = %zu\ti = %zu\n", start, i);
-			exp = ft_strjoin(ft_substr(line, start, i - start - 1), "=");
+			size = 0;
+			printf("start = %zu\ti = %zu\tlen = %zu\n", start, i, i + start - 1);
+			while (!ft_strchr(&line[i + size], !is_space(line[i + size])))
+				size++;
+			exp = ft_strjoin(ft_substr(line, start, size), "=");
 			if (!exp)
 				return (-1);
 			j = 0;

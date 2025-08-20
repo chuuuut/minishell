@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/18 17:22:12 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/20 15:20:33 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ int	main(int argc, char **argv, char **env)
 	quotes = malloc(sizeof(t_quotes));
 	if (!quotes)
 		return (errno);
+	// while (env[i])
+	// {
+	// 	printf("%d = %s\n", i, env[i]);
+	// 	i++;
+	// }
 	// printf("%s\n", expand_quotes(argv[1], quotes, env));
 	printf("%zu\n", ft_len_expand(argv[1], quotes, env));
 	free(quotes);
