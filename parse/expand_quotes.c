@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/20 15:19:16 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/20 15:48:52 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,15 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 		{
 			size = 0;
 			printf("start = %zu\ti = %zu\tlen = %zu\n", start, i, i + start - 1);
-			while (!ft_strchr(&line[i + size], !is_space(line[i + size])))
+			while (!ft_strchr(&line[i + size], !is_space(line[i + size])) && line[i + size])
 				size++;
 			exp = ft_strjoin(ft_substr(line, start, size), "=");
 			if (!exp)
 				return (-1);
 			j = 0;
- 			while (env[j])
+ 			while (env[j] && line[i])
 			{
+				printf("%zu = %s\n", j, env[j]);
 				if (ft_strnstr(env[j], exp, ft_strlen(exp)))
 				{
 					is_expand++;
@@ -99,6 +100,9 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 		return (len_exp);
 	return (0);
 }
+//echo $USER $USER $USER
+//0123456789012345678901
+//			il va trop loin, i incremente encore apres i = ft_strlen(line)
 
 
 
