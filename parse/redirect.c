@@ -6,15 +6,12 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:35:24 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/14 12:38:12 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/22 20:02:17 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* J'adore ta logique trop mims a chaque fois, ou tu fait etape par etape pour 
-   cela que je sais que tu va reussir en moins de 10 jours. Je t'aime ❤️
-   */
 // < file cmd = cmd < file
 // utiliser strchr pour trouver le chevron
 // strchr renvoie un pointeur sur ou il a trouve le chevron

@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/22 19:19:38 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/22 20:01:54 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 			len_exp = len_exp + (ft_strlen(env[j]) - (ft_strlen(exp) * 2));
 		j++;
 	}
+	// printf("len_exp = %zu\n", len_exp);
+	printf("exp = %s\n", exp);
 	// if (env[j] == NULL)
 		// return (- (ft_strlen(exp) - 1));
 	return (len_exp);
@@ -215,7 +217,6 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 	i = 0;
 	j = 0;
 	len_exp = ft_len_expand(line, quotes, env);
-	printf("%zu\n", len_exp);
 	exp = malloc(sizeof(char) * (len_exp + 1));
 	if (!exp)
 		return (NULL);
@@ -239,6 +240,14 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 }
 
 
+// malloc un char * a la taille len_exp
+// puis recopie line dans new_line avec les var d'env a la place des $
+// Puis apres cela token et fini
+
+// Exemple :
+
+// echo $USER $USER $USER -> line
+// echo chdoe chdoe chdoe -> new_line
 
 
 // "echo $HOME $HOME $HOME"
