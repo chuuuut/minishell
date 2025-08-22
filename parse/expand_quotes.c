@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/20 15:48:52 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/22 17:40:08 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,10 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 {
 	size_t	i;
 	size_t	len_exp;
-	char	*exp;
 	size_t		start;
-	size_t		j;
-	size_t		is_expand;
-	size_t		size;
 
 	i = 0;
-	is_expand = 0;
 	len_exp = ft_strlen(line);
-	if (!ft_strchr(line, '$'))
-		return (0);
 	while (i < ft_strlen(line))
 	{
 		while (line[i] && line[i] != '$')
@@ -73,37 +66,39 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 		while (line[i] && is_quote_closed(quotes, line, i) == '\'' && ft_isalpha(line[i]))
 			i++;
 		if (!(is_quote_closed(quotes, line, i) == '\''))
-		{
-			size = 0;
-			printf("start = %zu\ti = %zu\tlen = %zu\n", start, i, i + start - 1);
-			while (!ft_strchr(&line[i + size], !is_space(line[i + size])) && line[i + size])
-				size++;
-			exp = ft_strjoin(ft_substr(line, start, size), "=");
-			if (!exp)
-				return (-1);
-			j = 0;
- 			while (env[j] && line[i])
-			{
-				printf("%zu = %s\n", j, env[j]);
-				if (ft_strnstr(env[j], exp, ft_strlen(exp)))
-				{
-					is_expand++;
-					len_exp = len_exp + ft_strlen(exp) - (i - start);
-					break ;
-				}
-				j++;
-			}
-		}
+			len_exp += (len_expand_var(i, line, env, start));
 		i++;
 	}
-	if (is_expand)
-		return (len_exp);
-	return (0);
+	return (len_exp);
 }
 //echo $USER $USER $USER
 //0123456789012345678901
 //			il va trop loin, i incremente encore apres i = ft_strlen(line)
 
+size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
+{
+	size_t	j;
+	char	*exp;
+	size_t	len_exp;
+
+	j = 0;
+	len_exp = 0;
+	while (!ft_strchr(&line[i + j], !is_space(line[i + j])) && line[i + j])
+		j++;
+	exp = ft_strjoin(ft_substr(line, start, j), "=");
+	if (!exp)
+		return (-1);
+	j = 0;
+	while (env[j] && line[i])
+	{
+		if (ft_strnstr(env[j], exp, ft_strlen(exp)))
+			len_exp = len_exp + (ft_strlen(env[j]) - (ft_strlen(exp) * 2));
+		j++;
+	}
+	return (len_exp);
+}
+
+// /home/chdoe /home/chdoe /home/chdoe
 
 
 size_t	is_end_expand(char c)
