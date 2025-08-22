@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/22 17:40:08 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/22 19:19:38 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 			len_exp = len_exp + (ft_strlen(env[j]) - (ft_strlen(exp) * 2));
 		j++;
 	}
+	// if (env[j] == NULL)
+		// return (- (ft_strlen(exp) - 1));
 	return (len_exp);
 }
 
@@ -107,47 +109,142 @@ size_t	is_end_expand(char c)
 		return (1);
 	return (0);
 }
+
+int is_stop_exp(char c)
+{
+	int i;
+	static char check[] = " \"$'[]%=/0123456789><\0";
+
+	i = 0;
+	while (i != 23)
+	{
+		if (check[i] == c)
+			return (0);
+		// printf("la - %d\n", i);
+		i++;
+	}
+	return (1);
+}
 // " "$'[]%=/0123456789><"
 
+
+
+// char	*expand_quotes(char *line, t_quotes *quotes, char **env)
+// {
+// 	size_t		i;
+// 	size_t		j;
+// 	size_t		start;
+// 	char	*exp;
+	
+// 	i = 0;
+// 	if (!ft_strchr(line, '$'))
+// 		return (NULL);
+// 	while (line[i])
+// 	{
+// 		while (line[i] && line[i] != '$')
+// 			i++;
+// 		i++;
+// 		start = i;	
+// 		while (!is_space(line[i]) && line[i] != '$' && !is_bad_redirect(line[i]))
+// 			i++;
+// 		while (is_quote_closed(quotes, line, i) == '\'')
+// 			i++;
+// 		if (!(is_quote_closed(quotes, line, i) == '\''))
+// 		{
+// 			exp = ft_strjoin(ft_substr(line, start, i - start - 1), "=");
+// 			if (!exp)
+// 				return (NULL);
+// 			j = 0;
+//  			while (env[j])
+// 			{
+// 				if (ft_strnstr(env[j], exp, ft_strlen(exp)))
+// 					return (exp);
+// 				j++;
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+
+size_t	expand_var(char *line, char *exp, char **env)
+{
+	size_t		i;
+	size_t		j;
+	size_t		k;
+	char		*exp_var;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while (is_stop_exp(line[i]) && line[i])
+	{
+		i++;
+	}
+	// exp_var = ft_substr(line, 1, i);
+	exp_var = ft_strjoin(ft_substr(line, 0, i), "=");
+	while (env[j])
+	{
+		if (ft_strnstr(env[j], exp_var, ft_strlen(exp_var)))
+			break ;
+		j++;
+	}
+	if (!env[j])
+		return (0);
+	i++;
+	while (env[j][i])
+	{
+		exp[k] = env[j][i];
+		i++;
+		k++;
+	}
+	printf("%s\n", exp);
+	return (k);
+}
+// env[j] = USER=chdoe
 
 
 char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 {
 	size_t		i;
 	size_t		j;
-	size_t		start;
+	size_t		len_exp;
 	char	*exp;
 	
 	i = 0;
-	if (!ft_strchr(line, '$'))
+	j = 0;
+	len_exp = ft_len_expand(line, quotes, env);
+	printf("%zu\n", len_exp);
+	exp = malloc(sizeof(char) * (len_exp + 1));
+	if (!exp)
 		return (NULL);
-	while (line[i])
+	while (i < ft_strlen(line))
 	{
 		while (line[i] && line[i] != '$')
-			i++;
-		i++;
-		start = i;	
-		while (!is_space(line[i]) && line[i] != '$' && !is_bad_redirect(line[i]))
-			i++;
-		while (is_quote_closed(quotes, line, i) == '\'')
-			i++;
-		if (!(is_quote_closed(quotes, line, i) == '\''))
 		{
-			exp = ft_strjoin(ft_substr(line, start, i - start - 1), "=");
-			if (!exp)
-				return (NULL);
-			j = 0;
- 			while (env[j])
-			{
-				if (ft_strnstr(env[j], exp, ft_strlen(exp)))
-					return (exp);
-				j++;
-			}
+			exp[j] = line[i];
+			i++;
+			j++;
 		}
 		i++;
+		j += expand_var(&line[i], &exp[j], env);
+		while (is_stop_exp(line[i]) && line[i])
+		{
+			i++;
+		}
 	}
-	return (0);
+	exp[len_exp] = 0;
+	return (exp);
 }
+
+
+
+
+// "echo $HOME $HOME $HOME"
+// "echo /home/chdoe /home/chdoe /home/chdoe"
+
+
 // il me faut une fonction qui prend une str et qui peut inserer un mot dedans
 // retirer la len de exp et rajouter la len de env[j]
 
