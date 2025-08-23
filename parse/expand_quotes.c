@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/23 14:57:39 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/23 17:45:51 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 {
 	size_t	i;
 	size_t	len_exp;
-	size_t		start;
+	size_t	start;
 
 	i = 0;
+	// printf("line = %s\n", line);
 	len_exp = ft_strlen(line);
 	while (i < ft_strlen(line))
 	{
@@ -83,7 +84,7 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 
 	j = 0;
 	len_exp = 0;
-	while (!ft_strchr(&line[i + j], !is_space(line[i + j])) && line[i + j])
+	while (line[i + j] && !ft_strchr(&line[i + j], !is_space(line[i + j])) && i + j < ft_strlen(line))
 		j++;
 	exp = ft_strjoin(ft_substr(line, start, j), "=");
 	if (!exp)
@@ -95,7 +96,7 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 			len_exp = len_exp + (ft_strlen(env[j]) - (ft_strlen(exp) * 2));
 		j++;
 	}
-	// printf("len_exp = %zu\n", len_exp);
+	printf("len_exp = %zu\n", len_exp);
 	printf("exp = %s\n", exp);
 	return (len_exp);
 }
@@ -232,7 +233,7 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 		}
 	}
 	exp[len_exp] = 0;
-	return (exp);
+	return (exp);		// leak
 }
 
 

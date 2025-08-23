@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:57:22 by chdoe             #+#    #+#             */
-/*   Updated: 2024/11/30 04:26:14 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/23 17:46:04 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ RETURN VALUE
 */
 
 #include "libft.h"
+#include <stdio.h>
 
 size_t	ft_strlen(const char *s)
 {
