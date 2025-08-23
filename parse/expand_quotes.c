@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/22 20:01:54 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/23 14:57:39 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 	}
 	// printf("len_exp = %zu\n", len_exp);
 	printf("exp = %s\n", exp);
-	// if (env[j] == NULL)
-		// return (- (ft_strlen(exp) - 1));
 	return (len_exp);
 }
 
@@ -181,9 +179,7 @@ size_t	expand_var(char *line, char *exp, char **env)
 	j = 0;
 	k = 0;
 	while (is_stop_exp(line[i]) && line[i])
-	{
 		i++;
-	}
 	// exp_var = ft_substr(line, 1, i);
 	exp_var = ft_strjoin(ft_substr(line, 0, i), "=");
 	while (env[j])
