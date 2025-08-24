@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/23 17:45:51 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/24 16:15:59 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 
 	i = 0;
 	// printf("line = %s\n", line);
+	if (!line)
+		return (0);
 	len_exp = ft_strlen(line);
 	while (i < ft_strlen(line))
 	{
@@ -80,13 +82,18 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 {
 	size_t	j;
 	char	*exp;
+	char	*exp_first;
 	size_t	len_exp;
 
 	j = 0;
 	len_exp = 0;
-	while (line[i + j] && !ft_strchr(&line[i + j], !is_space(line[i + j])) && i + j < ft_strlen(line))
+	while (line[i + j] && line[i + j] !='$' && !is_space(line[i + j]) && i + j < ft_strlen(line))
 		j++;
-	exp = ft_strjoin(ft_substr(line, start, j), "=");
+	exp_first = ft_substr(line, start, j);
+	if (!exp_first)
+		return (-1);
+	exp = ft_strjoin(exp_first, "=");
+	free (exp_first);
 	if (!exp)
 		return (-1);
 	j = 0;
@@ -96,8 +103,7 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 			len_exp = len_exp + (ft_strlen(env[j]) - (ft_strlen(exp) * 2));
 		j++;
 	}
-	printf("len_exp = %zu\n", len_exp);
-	printf("exp = %s\n", exp);
+	free(exp);
 	return (len_exp);
 }
 
@@ -117,7 +123,7 @@ int is_stop_exp(char c)
 	static char check[] = " \"$'[]%=/0123456789><\0";
 
 	i = 0;
-	while (i != 23)
+	while (i != 22)
 	{
 		if (check[i] == c)
 			return (0);
@@ -175,6 +181,7 @@ size_t	expand_var(char *line, char *exp, char **env)
 	size_t		j;
 	size_t		k;
 	char		*exp_var;
+	char		*exp_first;
 
 	i = 0;
 	j = 0;
@@ -182,7 +189,13 @@ size_t	expand_var(char *line, char *exp, char **env)
 	while (is_stop_exp(line[i]) && line[i])
 		i++;
 	// exp_var = ft_substr(line, 1, i);
-	exp_var = ft_strjoin(ft_substr(line, 0, i), "=");
+	exp_first = ft_substr(line, 0, i);
+	if (!exp_first)
+		return (-1);
+	exp_var = ft_strjoin(exp_first, "=");
+	free(exp_first);
+	if (!exp_var)
+		return (-1);
 	while (env[j])
 	{
 		if (ft_strnstr(env[j], exp_var, ft_strlen(exp_var)))
@@ -198,7 +211,7 @@ size_t	expand_var(char *line, char *exp, char **env)
 		i++;
 		k++;
 	}
-	printf("%s\n", exp);
+	free(exp_var);
 	return (k);
 }
 // env[j] = USER=chdoe
@@ -214,7 +227,9 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 	i = 0;
 	j = 0;
 	len_exp = ft_len_expand(line, quotes, env);
-	exp = malloc(sizeof(char) * (len_exp + 1));
+	exp = NULL;
+	if (len_exp)
+		exp = malloc(sizeof(char) * (len_exp + 1));
 	if (!exp)
 		return (NULL);
 	while (i < ft_strlen(line))
@@ -228,9 +243,7 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 		i++;
 		j += expand_var(&line[i], &exp[j], env);
 		while (is_stop_exp(line[i]) && line[i])
-		{
 			i++;
-		}
 	}
 	exp[len_exp] = 0;
 	return (exp);		// leak
