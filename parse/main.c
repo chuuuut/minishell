@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 14:12:13 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 15:36:31 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,28 @@
 
 
 
-int	main(int argc, char **argv, char **env)
-{
-	int	i;
-	(void)	argc;
-	t_quotes	*quotes;
-	char	*expand;
+// int	main(int argc, char **argv, char **env)
+// {
+// 	int	i;
+// 	(void)	argc;
+// 	t_quotes	*quotes;
+// 	char	*expand;
 
-	i = 0;
-	quotes = malloc(sizeof(t_quotes));
-	if (!quotes)
-		return (errno);
-	init_quotes(quotes);
-	// while (env[i])
-	// {
-	// 	printf("%d = %s\n", i, env[i]);
-	// 	i++;
-	// }
-	// printf("%s\n", expand_quotes(argv[1], quotes, env));
-	printf("entry :\t\t%s\n", argv[1]);
-	expand = expand_quotes(argv[1], quotes, env);
-	printf("w/ expand :\t%s\n", expand);
-	free(expand);
-	free(quotes);
-	return (0);
-}
+// 	i = 0;
+// 	quotes = malloc(sizeof(t_quotes));
+// 	if (!quotes)
+// 		return (errno);
+// 	init_quotes(quotes);
+// 	// while (env[i])
+// 	// {
+// 	// 	printf("%d = %s\n", i, env[i]);
+// 	// 	i++;
+// 	// }
+// 	// printf("%s\n", expand_quotes(argv[1], quotes, env));
+// 	printf("entry :\t\t%s\n", argv[1]);
+// 	expand = expand_quotes(argv[1], quotes, env);
+// 	printf("w/ expand :\t%s\n", expand);
+// 	free(expand);
+// 	free(quotes);
+// 	return (0);
+// }

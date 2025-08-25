@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 14:59:58 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 16:39:48 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 		if (line[i])
 			i++;
 		start = i;
-		while (line[i] && is_quote_closed(quotes, line, i) == '\'' && ft_isalpha(line[i]))
+		while (line[i] && !(is_quote_closed(quotes, line, i) == '\'') && !is_stop_exp(line[i]))
 			i++;
-		if (!(is_quote_closed(quotes, line, i) == '\''))
-			len_exp += (len_expand_var(i, line, env, start));
+		if ((is_quote_closed(quotes, &line[i], ft_strlen(&line[i])) != '\''))
+			len_exp += (len_var(i, line, env, start));
 		i++;
 	}
 	return (len_exp);
 }
 
-size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
+size_t	len_var(size_t i, char *line, char **env, size_t start)
 {
 	size_t	j;
 	char	*exp;
@@ -57,7 +57,7 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 
 	j = 0;
 	len_exp = 0;
-	while (line[i + j] && line[i + j] !='$' && !is_space(line[i + j]) && i + j < ft_strlen(line))
+	while (line[i + j] && line[i + j] !='$' && is_stop_exp(line[i + j]) && i + j < ft_strlen(line))
 		j++;
 	exp_first = ft_substr(line, start, j);
 	if (!exp_first)
@@ -92,7 +92,7 @@ int is_stop_exp(char c)
 	return (1);
 }
 
-size_t	expand_var(char *line, char **env)
+size_t	expand_var(char *line, char *exp, char **env)
 {
 	size_t		i;
 	size_t		j;
@@ -124,6 +124,12 @@ size_t	expand_var(char *line, char **env)
 		return (0);
 	}
 	i++;
+	while (env[j][i])
+	{
+		exp[k] = env[j][i];
+		i++;
+		k++;
+	}
 	free(exp_var);
 	return (k);
 }
@@ -145,14 +151,15 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 		return (NULL);
 	while (i < ft_strlen(line))
 	{
-		while (line[i] && line[i] != '$')
+		while (line[i] && (line[i] != '$' || is_quote_closed(quotes, &line[i], ft_strlen(&line[i])) == '\''))
 		{
 			exp[j] = line[i];
 			i++;
 			j++;
 		}
-		i++;
-		j += expand_var(&line[i], env);
+		if (line[i])
+			i++;
+		j += expand_var(&line[i], &exp[j], env);
 		while (line[i] && is_stop_exp(line[i]))
 			i++;
 	}

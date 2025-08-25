@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:32:18 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/13 15:24:11 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 16:30:39 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,32 @@ int	is_prompt_space(char *line)
 	return (0);
 }
 
-// int	main(void)
-// {
-// 	char	*line;
+int	main(int argc, char **argv, char **env)
+{
+	char	*line;
+	char	*expand;
+	t_quotes	*quotes;
+	(void)	argc;
+	(void)	argv;
 
-// 	get_signal();
-// 	while((line = readline("> ")) != NULL)
-// 	{
-// 		if (is_prompt_space(line))
-// 			continue ;
-// 		printf("result : %s\n", line);
-// 		printf("%d\n", check_empty_pipes(line));
-// 		add_history(line);
-// 		free(line);
-// 	}
-// 	rl_clear_history();
-// 	return (0);
-// }
+	quotes = malloc(sizeof(t_quotes));
+	if (!quotes)
+		return (errno);
+	get_signal();
+	while((line = readline("> ")) != NULL)
+	{
+		init_quotes(quotes);
+		if (is_prompt_space(line))
+			continue ;
+		printf("result : %s\n", line);
+		// printf("%d\n", check_empty_pipes(line));
+		expand = expand_quotes(line, quotes, env);
+		printf("w/ expand :\t%s\n", expand);
+		add_history(line);
+		free(expand);
+		free(line);
+	}
+	free (quotes);
+	rl_clear_history();
+	return (0);
+}

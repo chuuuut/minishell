@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 12:24:46 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 16:00:40 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int		redirect_inout(char *line, t_quotes *quotes);
 int		append_inout(char *line, t_quotes *quotes);
 //				EXPAND_QUOTES
 size_t	ft_len_expand(char *line, t_quotes *quotes, char **env);
-size_t	is_end_expand(char c);
-size_t	expand_var(char *line, char **env);
+int		is_stop_exp(char c);
+size_t	expand_var(char *line, char *exp, char **env);
 char	*expand_quotes(char *line, t_quotes *quotes, char **env);
-size_t	len_expand_var(size_t i, char *line, char **env, size_t start);
+size_t	len_var(size_t i, char *line, char **env, size_t start);
 //				INIT_VAR
 void	init_inout(t_inout_ope *inout);
 void	init_quotes(t_quotes *quotes);

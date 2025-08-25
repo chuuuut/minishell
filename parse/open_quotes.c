@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:31:57 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/22 20:02:00 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 16:26:45 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	is_quote_closed(t_quotes *quotes, char *line, int end)
 	int	i;
 
 	i = 0;
-	while (line[i] && i < end)
+	while (i < end && line[i])
 	{
 		if (first_quote(&line[i]) == '\"' && line[i] == '\"')
 			i += quotes_status(&line[i], quotes, '\"');
