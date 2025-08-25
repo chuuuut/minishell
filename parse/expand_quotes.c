@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 12:27:12 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 12:31:39 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,57 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 		return (exp);		// leak
 	return (line);
 }
+
+
+
+// ➜  parse git:(main) ✗ valgrind ./minishell "echo "salut monde""
+// ==69582== Memcheck, a memory error detector
+// ==69582== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+// ==69582== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+// ==69582== Command: ./minishell echo\ salut monde
+// ==69582== 
+// echo salut
+// echo salut
+// ==69582== 
+// ==69582== HEAP SUMMARY:
+// ==69582==     in use at exit: 7 bytes in 1 blocks
+// ==69582==   total heap usage: 7 allocs, 6 frees, 1,067 bytes allocated
+// ==69582== 
+// ==69582== LEAK SUMMARY:
+// ==69582==    definitely lost: 7 bytes in 1 blocks
+// ==69582==    indirectly lost: 0 bytes in 0 blocks
+// ==69582==      possibly lost: 0 bytes in 0 blocks
+// ==69582==    still reachable: 0 bytes in 0 blocks
+// ==69582==         suppressed: 0 bytes in 0 blocks
+// ==69582== Rerun with --leak-check=full to see details of leaked memory
+// ==69582== 
+// ==69582== For lists of detected and suppressed errors, rerun with: -s
+// ==69582== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+// ➜  parse git:(main) ✗ valgrind ./minishell "echo \"salut monde\""
+// ==69601== Memcheck, a memory error detector
+// ==69601== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+// ==69601== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+// ==69601== Command: ./minishell echo\ "salut\ monde"
+// ==69601== 
+// echo "salut monde"
+// echo "salut monde"
+// ==69601== 
+// ==69601== HEAP SUMMARY:
+// ==69601==     in use at exit: 0 bytes in 0 blocks
+// ==69601==   total heap usage: 7 allocs, 7 frees, 1,097 bytes allocated
+// ==69601== 
+// ==69601== All heap blocks were freed -- no leaks are possible
+// ==69601== 
+// ==69601== For lists of detected and suppressed errors, rerun with: -s
+// ==69601== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+
+
+
+
 
 // malloc un char * a la taille len_exp
 // puis recopie line dans new_line avec les var d'env a la place des $
