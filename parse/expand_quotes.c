@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 11:16:19 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 12:27:12 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,6 @@
 
 //		renvoyer quand expand ou quand ignorer
 
-
-// int	expand_quotes(char *line, t_quotes *quotes, char **env)
-// {
-// 	int	i;
-	
-// 	i = 0;
-// 	while (line[i])
-// 	{
-// 		if (line[i] && line[i] == '$')
-// 		{
-// 			i++;
-// 			if (line[i - 1] == '\\')
-// 				return (1);			//pas d'expand
-// 			if (is_quote_closed(quotes, line, i) == '\'')
-// 				return (1);			//pas d'expand
-//             if (is_bad_redirect(line[i]))
-// 				return (-1);		
-// 			while (line[i] && is_space(line[i]))
-// 				i++;
-// 		}
-//         else
-//     		i++;
-// 	}
-// 	return (0);
-// }
-
-
 size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 {
 	size_t	i;
@@ -56,7 +29,6 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 	size_t	start;
 
 	i = 0;
-	// printf("line = %s\n", line);
 	if (!line)
 		return (0);
 	len_exp = ft_strlen(line);
@@ -75,9 +47,6 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 	}
 	return (len_exp);
 }
-//echo $USER $USER $USER
-//0123456789012345678901
-//			il va trop loin, i incremente encore apres i = ft_strlen(line)
 
 size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 {
@@ -108,14 +77,6 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 	return (len_exp);
 }
 
-
-// size_t	is_end_expand(char c)
-// {
-// 	if (ft_isalnum(c) || c == '_')
-// 		return (1);
-// 	return (0);
-// }
-
 int is_stop_exp(char c)
 {
 	int i;
@@ -126,14 +87,12 @@ int is_stop_exp(char c)
 	{
 		if (check[i] == c)
 			return (0);
-		// printf("la - %d\n", i);
 		i++;
 	}
 	return (1);
 }
-// " "$'[]%=/0123456789><"
 
-size_t	expand_var(char *line, char *exp, char **env)
+size_t	expand_var(char *line, char **env)
 {
 	size_t		i;
 	size_t		j;
@@ -142,11 +101,9 @@ size_t	expand_var(char *line, char *exp, char **env)
 	char		*exp_first;
 
 	i = 0;
-	j = 0;
 	k = 0;
-	while (is_stop_exp(line[i]) && line[i])
+	while (line[i] && is_stop_exp(line[i]))
 		i++;
-	// exp_var = ft_substr(line, 1, i);
 	exp_first = ft_substr(line, 0, i);
 	if (!exp_first)
 		return (-1);
@@ -154,6 +111,7 @@ size_t	expand_var(char *line, char *exp, char **env)
 	free(exp_first);
 	if (!exp_var)
 		return (-1);
+	j = 0;
 	while (env[j])
 	{
 		if (ft_strnstr(env[j], exp_var, ft_strlen(exp_var)))
@@ -163,13 +121,6 @@ size_t	expand_var(char *line, char *exp, char **env)
 	if (!env[j])
 		return (0);
 	i++;
-	while (env[j][i])		//	checker si expand il y a
-	{
-		exp[k] = env[j][i];
-		printf("i = %zu,\tj = %zu,\tk = %zu\n", i, j, k);
-		i++;
-		k++;
-	}
 	free(exp_var);
 	return (k);
 }
@@ -198,8 +149,8 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 			j++;
 		}
 		i++;
-		j += expand_var(&line[i], &exp[j], env);
-		while (is_stop_exp(line[i]) && line[i])
+		j += expand_var(&line[i], env);
+		while (line[i] && is_stop_exp(line[i]))
 			i++;
 	}
 	exp[len_exp] = 0;
@@ -208,24 +159,9 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 	return (line);
 }
 
-
 // malloc un char * a la taille len_exp
 // puis recopie line dans new_line avec les var d'env a la place des $
 // Puis apres cela token et fini
-
-// Exemple :
-
-// echo $USER $USER $USER -> line
-// echo chdoe chdoe chdoe -> new_line
-
-
-// "echo $HOME $HOME $HOME"
-// "echo /home/chdoe /home/chdoe /home/chdoe"
-
-
-// il me faut une fonction qui prend une str et qui peut inserer un mot dedans
-// retirer la len de exp et rajouter la len de env[j]
-
 
 
 // ######################################
