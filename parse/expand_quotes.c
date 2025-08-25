@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 12:31:39 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 12:33:02 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,23 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 // ==69601== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
-
+// ➜  parse git:(main) ✗ valgrind ./minishell "echo 'salut monde'"
+// ==70345== Memcheck, a memory error detector
+// ==70345== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+// ==70345== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+// ==70345== Command: ./minishell echo\ 'salut\ monde'
+// ==70345== 
+// echo 'salut monde'
+// echo 'salut monde'
+// ==70345== 
+// ==70345== HEAP SUMMARY:
+// ==70345==     in use at exit: 0 bytes in 0 blocks
+// ==70345==   total heap usage: 7 allocs, 7 frees, 1,097 bytes allocated
+// ==70345== 
+// ==70345== All heap blocks were freed -- no leaks are possible
+// ==70345== 
+// ==70345== For lists of detected and suppressed errors, rerun with: -s
+// ==70345== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 
 
