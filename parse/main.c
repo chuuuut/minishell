@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/24 16:18:35 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 14:12:13 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int	main(int argc, char **argv, char **env)
 	// 	i++;
 	// }
 	// printf("%s\n", expand_quotes(argv[1], quotes, env));
-	printf("%s\n", argv[1]);
+	printf("entry :\t\t%s\n", argv[1]);
 	expand = expand_quotes(argv[1], quotes, env);
-	printf("%s\n", expand);
+	printf("w/ expand :\t%s\n", expand);
 	free(expand);
 	free(quotes);
 	return (0);
