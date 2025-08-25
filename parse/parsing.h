@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 16:00:40 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 17:43:48 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 
 # include "./Libft/libft.h"
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	char			*cmd;
 	char			**args;
-	char			**infile; 
+	char			**infile;
 	char			**outfile;
 	struct s_cmd	*next;
+}	t_cmd;
 	// On met un char ** car il y a besoin de tout les fichiers IN et OUT
 	// pour bien gerer les erreurs durant l'execution
-}	t_cmd;
 
-typedef struct	s_quotes
+typedef struct s_quotes
 {
 	int		i;
 	bool	odd_d_quote;
@@ -37,7 +37,7 @@ typedef struct	s_quotes
 	bool	char_quote;
 }	t_quotes;
 
-typedef struct	s_inout_ope
+typedef struct s_inout_ope
 {
 	bool	is_file;
 	bool	is_cmd;
@@ -46,7 +46,7 @@ typedef struct	s_inout_ope
 //				READLINE
 int		is_prompt_space(char *line);
 //				SIGNALS
-void    sh_ctrlc_behave(int signal);
+void	sh_ctrlc_behave(int signal);
 void	get_signal(void);
 //				PIPES
 int		is_char_space(char *line);

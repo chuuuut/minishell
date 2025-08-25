@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:32:32 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/12 14:50:33 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 17:36:15 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int	check_empty_pipes(char *line)
 		return (-1);
 	nb_pipes = nb_of_pipes(line);
 	if (nb_pipes != ft_tablen(pipes_tab) - 1)
+	{
+		ft_free_tab(pipes_tab);
 		return (0);
+	}
 	i = 0;
 	while (pipes_tab[i])
 	{

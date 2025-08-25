@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 15:36:31 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 17:41:46 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 // {
 // 	(void)	argc;
 // 	t_quotes	*quotes;
-	
+
 // 	quotes = malloc(sizeof(t_quotes));
 // 	if (!quotes)
 // 	return (errno);

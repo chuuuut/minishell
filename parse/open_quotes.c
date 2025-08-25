@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:31:57 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 16:26:45 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 17:41:54 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,3 @@ char	is_quote_closed(t_quotes *quotes, char *line, int end)
 		return ('\'');
 	return (0);
 }
-

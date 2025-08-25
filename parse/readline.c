@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:32:18 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 16:30:39 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 17:47:20 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,29 @@ int	is_prompt_space(char *line)
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*line;
-	char	*expand;
+	(void) argc;
+	(void) argv;
+	char		*line;
+	char		*expand;
 	t_quotes	*quotes;
-	(void)	argc;
-	(void)	argv;
 
 	quotes = malloc(sizeof(t_quotes));
 	if (!quotes)
 		return (errno);
 	get_signal();
-	while((line = readline("> ")) != NULL)
+	while ((line = readline("> ")) != NULL)		//norme pas contente
 	{
 		init_quotes(quotes);
+		if (syntax_error(line, quotes))
+		{
+			free(line);
+			free (quotes);
+			rl_clear_history();
+			return (0);
+		}
 		if (is_prompt_space(line))
 			continue ;
 		printf("result : %s\n", line);
-		// printf("%d\n", check_empty_pipes(line));
 		expand = expand_quotes(line, quotes, env);
 		printf("w/ expand :\t%s\n", expand);
 		add_history(line);

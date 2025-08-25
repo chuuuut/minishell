@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:32:41 by chdoe             #+#    #+#             */
-/*   Updated: 2025/07/30 17:25:24 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 17:51:32 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,10 @@ can have memory leaks.
 You should limit yourself to the subject description. Anything that is not asked
 is not required.
 If you have any doubt about a requirement, take bash as a reference.
-*/
 
 
 
-/*
+
 > = Outfile
 < = Infile
 $ = Variable Environnement
@@ -127,11 +126,8 @@ Outfiles = $PWD
 
 - checker `echo $?`
 - checker `echo $nimp$HOME$nimp2` -> fait comme `echo $HOME`
-*/
 
 
-
-/*
 Timeline
 [readline->check Syntaxe->Pipe->expand (faire attention au quote)->tokenise(supprime les quote)]->EXEC
 
@@ -195,28 +191,4 @@ args = tout mot qui est pas une redirection
 redirection = toute se qui a > < devant
 */
 
-
 #include "../includes/minishell.h"
-
-// char	*expand_cmd(char **argv, char **env)
-// {
-// 	int	i;
-
-// 	i = 1;
-// 	while (argv[i])
-// 	{
-// 		if (ft_strncmp(argv[i][0], '$', ft_strlen(argv[i])) == 0)
-// 		{
-			
-// 		}
-// 	}
-// 	// checker si la commande existe dans env
-// 	// si elle existe, recuperer le chemin
-// 	// sinon, checker ce que ca fait dans le bash --posix et renvoyer la meme chose
-// }
-
-
-// fonction qui :
-// - checke si les pipes sont ok
-// - qui checke si les quotes sont ok
-// qui

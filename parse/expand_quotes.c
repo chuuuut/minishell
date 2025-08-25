@@ -6,21 +6,11 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 16:39:48 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 17:41:30 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-//pas d'interpretation de $ dans ''
-
-//		objectif : savoir s'il faut expand ou pas
-//	- quand on est dans "" 		->	EXPAND
-//	- quand $ suivi de texte	->	EXPAND
-//	- quand on est dans ''		->	pas d'expand
-//	- quand $ précédé de '\\'	->	pas d'expand
-
-//		renvoyer quand expand ou quand ignorer
 
 size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 {
@@ -39,7 +29,8 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 		if (line[i])
 			i++;
 		start = i;
-		while (line[i] && !(is_quote_closed(quotes, line, i) == '\'') && !is_stop_exp(line[i]))
+		while (line[i] && !(is_quote_closed(quotes, line, i) == '\'') \
+			&& !is_stop_exp(line[i]))
 			i++;
 		if ((is_quote_closed(quotes, &line[i], ft_strlen(&line[i])) != '\''))
 			len_exp += (len_var(i, line, env, start));
@@ -57,7 +48,8 @@ size_t	len_var(size_t i, char *line, char **env, size_t start)
 
 	j = 0;
 	len_exp = 0;
-	while (line[i + j] && line[i + j] !='$' && is_stop_exp(line[i + j]) && i + j < ft_strlen(line))
+	while (line[i + j] && line[i + j] != '$' && is_stop_exp(line[i + j]) \
+		&& i + j < ft_strlen(line))
 		j++;
 	exp_first = ft_substr(line, start, j);
 	if (!exp_first)
@@ -77,12 +69,13 @@ size_t	len_var(size_t i, char *line, char **env, size_t start)
 	return (len_exp);
 }
 
-int is_stop_exp(char c)
+int	is_stop_exp(char c)
 {
-	int i;
-	static char check[] = " \"$'[]%=/0123456789><\0";
+	int			i;
+	static char	*check;
 
 	i = 0;
+	check = " \"$'[]%=/0123456789><\0";
 	while (i != 22)
 	{
 		if (check[i] == c || (c >= 97 && c <= 122))
@@ -136,11 +129,11 @@ size_t	expand_var(char *line, char *exp, char **env)
 
 char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 {
-	size_t		i;
-	size_t		j;
-	size_t		len_exp;
+	size_t	i;
+	size_t	j;
+	size_t	len_exp;
 	char	*exp;
-	
+
 	i = 0;
 	j = 0;
 	len_exp = ft_len_expand(line, quotes, env);
@@ -151,7 +144,8 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 		return (NULL);
 	while (i < ft_strlen(line))
 	{
-		while (line[i] && (line[i] != '$' || is_quote_closed(quotes, &line[i], ft_strlen(&line[i])) == '\''))
+		while (line[i] && (line[i] != '$' \
+			|| is_quote_closed(quotes, &line[i], ft_strlen(&line[i])) == '\''))
 		{
 			exp[j] = line[i];
 			i++;
@@ -168,125 +162,3 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 		return (exp);
 	return (line);
 }
-
-
-// malloc un char * a la taille len_exp
-// puis recopie line dans new_line avec les var d'env a la place des $
-// Puis apres cela token et fini
-
-
-// ######################################
-// # ✅ 1. CAS ENTIÈREMENT VALIDES
-// ######################################
-
-// echo salut                          # Commande simple
-// echo "salut monde"                  # Double quotes
-// echo 'salut monde'                  # Single quotes
-// echo "$USER"                        # Expansion valide
-// echo "Bonjour $USER !"              # Expansion dans double quotes
-// echo '$USER'                        # Pas d'expansion dans single quotes
-// echo texte$USERfin                   # Expansion collée à du texte
-// echo "txt$USER"fin                   # Expansion dans quotes + texte hors quotes
-// ls -l > file.txt                     # Redirection out
-// cat < file.txt                       # Redirection in
-// echo "salut" > file.txt              # Quote + redirection
-// cat <<EOF                            # Heredoc valide
-// fin de texte
-// EOF
-// ls -l >> log.txt                     # Append valide
-// cat <<EOF | grep "txt"               # Heredoc + pipe
-// test
-// EOF
-// echo "$INEXISTANT"                   # Expansion vide
-
-// ######################################
-// # ❌ 2. CAS ENTIÈREMENT INVALIDES
-// ######################################
-
-// | ls                                 # Pipe en début
-// ls || ls                             # Double pipe (non géré dans minishell simple)
-// <                                    # Redirection in sans fichier
-// >                                    # Redirection out sans fichier
-// >>                                   # Append sans fichier
-// <<                                   # Heredoc sans délimiteur
-// ls < >                               # Redirection incohérente
-// < file.txt >                         # Out sans fichier après
-// echo "salut                          # Double quote non fermée
-// echo 'salut                          # Single quote non fermée
-// echo ${USER                          # Accolade non fermée
-// cat <<EOF                            # Heredoc non terminé
-// test
-
-// ls > $INEXISTANT                     # Fichier vide après expansion
-// cat < $INEXISTANT                    # Idem
-// >> $INEXISTANT/                      # Répertoire inexistant après expansion
-// < $INEXISTANT >                      # In + Out sur fichier vide
-
-// ######################################
-// # ⚠️ 3. CAS MIXTES (partiellement OK)
-// ######################################
-
-// echo salut | grep sal >> log.txt     # Commande + pipe + append valide
-// echo "ok" | grep "o" > file.txt      # Expansion implicite + redirection valide
-// echo "Hello $USER" | grep "$INEXISTANT"  # Expansion vide mais commande fonctionne
-// cat < file.txt | grep "txt"          # In valide + pipe valide
-// echo "salut" > file.txt >> log2.txt  # Double redirection out → dernière gagne
-// ls -l > $USER.txt                    # Expansion dans nom fichier
-// ls -l > "$USER.txt"                  # Expansion dans quotes
-// echo $USER $INEXISTANT               # Expansion mixte : valide + vide
-// echo "$USER" "$INEXISTANT"           # Expansion vide dans quotes
-// echo 'test"ok'                       # Quotes mélangées mais fermées
-// echo "test'ok"                       # Idem
-// cat <<EOF | grep "ok"                 # Heredoc + pipe valide
-// coucou
-// EOF
-// cat <<EOF | grep "$INEXISTANT"        # Heredoc + expansion vide dans pipe
-// vide
-// EOF
-
-
-
-
-
-
-
-// chercher le $, checker s'il est dans une quote
-// checker dans quel quote il est pour savoir si expand
-// 	- si '', pas d'expand
-//	- si "", expand
-//	- si \$, juste du texte donc pas d'expand
-
-
-
-
-// # ✅ Cas valides (expansion autorisée)
-// echo $USER                  # ➤ Affiche la valeur de la variable USER
-// echo "$HOME"                # ➤ Expansion dans double quotes (préserve les espaces)
-// echo text_$PATH             # ➤ Expansion collée à du texte
-// echo "${PATH}"              # ➤ Expansion avec accolades
-// echo "$USER_$HOSTNAME"      # ➤ Plusieurs expansions dans une même string
-// echo "Bonjour $USER !"      # ➤ Mélange texte + expansion
-// echo $@                     # ➤ Expansion des paramètres positionnels
-// echo "$1"                   # ➤ Expansion d’un argument spécifique
-// echo "$(date)"              # ➤ Command substitution dans double quotes
-// echo $INEXISTANT            # ➤ Expansion d'une variable inexistante → affiche rien
-// echo "$INEXISTANT"          # ➤ Expansion inexistante dans double quotes → affiche ""
-// echo texte$INEXISTANT fin   # ➤ Expansion inexistante au milieu → affiche "textefin"
-// echo "${INEXISTANT}"        # ➤ Avec accolades → expansion vide
-// echo "$INEXISTANT$USER"     # ➤ Mélange vide + expansion valide
-// echo ${INEXISTANT:-default} # ➤ Expansion avec valeur par défaut (bash, non POSIX strict)
-
-// # ❌ Cas à traiter correctement en parsing
-// echo '$INEXISTANT'          # ➤ Pas d’expansion dans single quotes → littéral
-// echo "\$INEXISTANT"         # ➤ Dollar échappé → affiche $INEXISTANT
-// echo ${INEXISTANT           # ➤ Accolade ouverte non fermée → erreur de syntaxe
-// echo "$INEXISTANT           # ➤ Double quote ouverte non fermée → erreur
-// echo '$USER'                # ➤ Pas d’expansion dans single quotes
-// echo "\$USER"               # ➤ Caractère dollar échappé → affiche $USER
-// echo $                      # ➤ Dollar seul → littéral, pas d’expansion
-// echo $123                   # ➤ Variable non valide (commence par un chiffre) → littéral
-// echo "${UNFINISHED"         # ➤ Accolade non fermée → erreur de syntaxe
-// echo $"TEXT"                # ➤ Cas spécial (localisation) → à supporter ou ignorer
-// echo ${}                    # ➤ Vide entre accolades → erreur
-// echo "$UNFINISHED           # ➤ Double quote ouverte → erreur (unclosed double quote)
-
