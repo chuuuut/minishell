@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:31:20 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/24 16:15:59 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/25 11:16:19 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ size_t	ft_len_expand(char *line, t_quotes *quotes, char **env)
 	{
 		while (line[i] && line[i] != '$')
 			i++;
-		i++;
+		if (line[i])
+			i++;
 		start = i;
 		while (line[i] && is_quote_closed(quotes, line, i) == '\'' && ft_isalpha(line[i]))
 			i++;
@@ -107,15 +108,13 @@ size_t	len_expand_var(size_t i, char *line, char **env, size_t start)
 	return (len_exp);
 }
 
-// /home/chdoe /home/chdoe /home/chdoe
 
-
-size_t	is_end_expand(char c)
-{
-	if (ft_isalnum(c) || c == '_')
-		return (1);
-	return (0);
-}
+// size_t	is_end_expand(char c)
+// {
+// 	if (ft_isalnum(c) || c == '_')
+// 		return (1);
+// 	return (0);
+// }
 
 int is_stop_exp(char c)
 {
@@ -133,47 +132,6 @@ int is_stop_exp(char c)
 	return (1);
 }
 // " "$'[]%=/0123456789><"
-
-
-
-// char	*expand_quotes(char *line, t_quotes *quotes, char **env)
-// {
-// 	size_t		i;
-// 	size_t		j;
-// 	size_t		start;
-// 	char	*exp;
-	
-// 	i = 0;
-// 	if (!ft_strchr(line, '$'))
-// 		return (NULL);
-// 	while (line[i])
-// 	{
-// 		while (line[i] && line[i] != '$')
-// 			i++;
-// 		i++;
-// 		start = i;	
-// 		while (!is_space(line[i]) && line[i] != '$' && !is_bad_redirect(line[i]))
-// 			i++;
-// 		while (is_quote_closed(quotes, line, i) == '\'')
-// 			i++;
-// 		if (!(is_quote_closed(quotes, line, i) == '\''))
-// 		{
-// 			exp = ft_strjoin(ft_substr(line, start, i - start - 1), "=");
-// 			if (!exp)
-// 				return (NULL);
-// 			j = 0;
-//  			while (env[j])
-// 			{
-// 				if (ft_strnstr(env[j], exp, ft_strlen(exp)))
-// 					return (exp);
-// 				j++;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
 
 size_t	expand_var(char *line, char *exp, char **env)
 {
@@ -205,17 +163,16 @@ size_t	expand_var(char *line, char *exp, char **env)
 	if (!env[j])
 		return (0);
 	i++;
-	while (env[j][i])
+	while (env[j][i])		//	checker si expand il y a
 	{
 		exp[k] = env[j][i];
+		printf("i = %zu,\tj = %zu,\tk = %zu\n", i, j, k);
 		i++;
 		k++;
 	}
 	free(exp_var);
 	return (k);
 }
-// env[j] = USER=chdoe
-
 
 char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 {
@@ -246,7 +203,9 @@ char	*expand_quotes(char *line, t_quotes *quotes, char **env)
 			i++;
 	}
 	exp[len_exp] = 0;
-	return (exp);		// leak
+	if (exp)
+		return (exp);		// leak
+	return (line);
 }
 
 
