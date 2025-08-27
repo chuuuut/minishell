@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 14:38:50 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 17:41:46 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/27 18:17:02 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,3 +89,21 @@
 // 	free(quotes);
 // 	return (0);
 // }
+
+int	main(int argc, char **argv, char **env)
+{
+	(void)	argc;
+	(void)	env;
+	t_quotes	*quotes;
+	size_t	tokens;
+
+	quotes = malloc(sizeof(t_quotes));
+	if (!quotes)
+		return (errno);
+	init_quotes(quotes);
+	printf("entry :\t\t%s\n", argv[1]);
+	tokens = count_tokens(quotes, argv[1]);
+	printf("nb of tokens :\t%zu\n", tokens);
+	free(quotes);
+	return (0);
+}

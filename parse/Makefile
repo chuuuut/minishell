@@ -37,7 +37,7 @@ FT_PRINTF = ./Libft/ft_printf/libftprintf.a
 #sources of prog
 SRCS = open_quotes.c parsing_errors.c parsing_utils.c \
 parsing.c pipes.c readline.c redirect.c signals.c \
-expand_quotes.c init_var.c main.c \
+expand_quotes.c init_var.c main.c tokenizer.c \
 
 #compiling rule : compiles objects (= *.o)
 OBJ = $(SRCS:%.c=$(ODIR)%.o)
@@ -63,7 +63,7 @@ lib: libft ft_printf
 #By doing so, each *.o will be recompiled if its source in .c format is newer.
 
 $(NAME): $(OBJ) $(ODIR)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(FT_PRINTF) -lreadline -lm
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(FT_PRINTF) -lreadline
 #ar -rcs : archiving
 
 #clean *.o creates from the OBJ

@@ -6,7 +6,7 @@
 /*   By: chdoe <chdoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:57:03 by chdoe             #+#    #+#             */
-/*   Updated: 2025/08/25 17:43:48 by chdoe            ###   ########.fr       */
+/*   Updated: 2025/08/27 18:36:46 by chdoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,8 @@ size_t	len_var(size_t i, char *line, char **env, size_t start);
 //				INIT_VAR
 void	init_inout(t_inout_ope *inout);
 void	init_quotes(t_quotes *quotes);
+//				TOKENIZER
+size_t	count_tokens(t_quotes *quotes, char *line);
+// char	**tokenizer(t_quotes *quotes, char *line);
 
 #endif
